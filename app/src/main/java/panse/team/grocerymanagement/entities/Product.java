@@ -3,13 +3,13 @@ package panse.team.grocerymanagement.entities;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private long productId;
+    private String productId;
     private String productName;
     private int productQty;
     private double productPrice;
     private String information;
 
-    public Product(long productId, String productName, int productQty, double productPrice, String information) {
+    public Product(String productId, String productName, int productQty, double productPrice, String information) {
         this.productId = productId;
         this.productName = productName;
         this.productQty = productQty;
@@ -21,11 +21,11 @@ public class Product implements Serializable {
 
     }
 
-    public long getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
