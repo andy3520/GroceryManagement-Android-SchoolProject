@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvProName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:text="@string/proName"/>
+
+    <ImageButton
+        android:id="@+id/imgBtnDes"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        app:srcCompat="@drawable/sharp_remove_24" />
+
+    <TextView
+        android:id="@+id/tvProQty"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:text="@string/saleQty" />
+
+    <ImageButton
+        android:id="@+id/imgBtnIns"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        app:srcCompat="@drawable/sharp_add_24" />
+
+    <TextView
+        android:id="@+id/tvProPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:text="@string/proPrice" />
+
+    <TextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:text="@string/totalPrice" />
+
+    <ImageButton
+        android:id="@+id/imgBtnClear"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:srcCompat="@drawable/sharp_clear_24" />
+</LinearLayout>

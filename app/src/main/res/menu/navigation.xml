@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_donhang"
+        android:icon="@drawable/baseline_receipt_black_48dp"
+        android:title="@string/qldh" />
+
+    <item
+        android:id="@+id/nav_banhang"
+        android:icon="@drawable/outline_attach_money_black_48dp"
+        android:title="@string/tdh" />
+
+    <item
+        android:id="@+id/nav_sanpham"
+        android:icon="@drawable/outline_store_black_48dp"
+        android:title="@string/qlsp" />
+
+    <item
+        android:id="@+id/nav_phantich"
+        android:icon="@drawable/outline_show_chart_black_48dp"
+        android:title="@string/pt" />
+
+</menu>

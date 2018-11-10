@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GroceryManagement</string>
+    <string name="qldh">Đơn hàng</string>
+    <string name="tdh">Bán hàng</string>
+    <string name="qlsp">Sản phẩm</string>
+    <string name="pt">Thống kê</string>
+    <string name="title_home">Home</string>
+    <string name="total">Tổng tiền</string>
+    <string name="orderdate">Ngày mua</string>
+    <string name="cusName">Tên Khách</string>
+    <string name="orderId">Mã đơn</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="proName">Tên Sản Phẩm</string>
+    <string name="saleQty">Số lượng</string>
+    <string name="proPrice">Đơn giá</string>
+    <string name="totalPrice">Thành tiền</string>
+
+</resources>
