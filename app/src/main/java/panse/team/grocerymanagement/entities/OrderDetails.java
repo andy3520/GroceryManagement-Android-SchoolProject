@@ -4,13 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class OrderDetails implements Serializable {
+    private String orderDetailId;
     private String orderId;
     private long productId;
     private int orderDetailQty;
     private double orderDetailPrice;
     private Date orderDetailDate;
 
-    public OrderDetails(String orderId, long productId, int orderDetailQty, double orderDetailPrice, Date orderDetailDate) {
+    public OrderDetails(String orderDetailId, String orderId, long productId, int orderDetailQty, double orderDetailPrice, Date orderDetailDate) {
+        this.orderDetailId = orderDetailId;
         this.orderId = orderId;
         this.productId = productId;
         this.orderDetailQty = orderDetailQty;
@@ -19,6 +21,14 @@ public class OrderDetails implements Serializable {
     }
 
     public OrderDetails() {
+    }
+
+    public String getOrderDetailId() {
+        return orderDetailId;
+    }
+
+    public void setOrderDetailId(String orderDetailId) {
+        this.orderDetailId = orderDetailId;
     }
 
     public String getOrderId() {

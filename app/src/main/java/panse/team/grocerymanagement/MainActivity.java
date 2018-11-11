@@ -31,14 +31,10 @@ public class MainActivity extends AppCompatActivity {
                     addOrderList();
                     return true;
                 case R.id.nav_banhang:
-                    fragmentManager = getSupportFragmentManager();
-                    SaleFragment orderListFragment = new SaleFragment();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
-                    fragmentTransaction.commit();
+                    addOrderDetail();
                     return true;
                 case R.id.nav_sanpham:
-                     addProductList();
+                    addProductList();
                     return true;
                 case R.id.nav_phantich:
 
@@ -64,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     // ^^^
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,11 +80,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
         fragmentTransaction.commit();
     }
-private  void addProductList(){
-    fragmentManager = getSupportFragmentManager();
-   ProductListFragment productListFragment = new ProductListFragment();
-    fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.fragmentMainContainer, productListFragment);
-    fragmentTransaction.commit();
-}
+
+    private void addProductList() {
+        fragmentManager = getSupportFragmentManager();
+        ProductListFragment productListFragment = new ProductListFragment();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMainContainer, productListFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void addOrderDetail() {
+        addOrderDetail();
+        fragmentManager = getSupportFragmentManager();
+        SaleFragment orderListFragment = new SaleFragment();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
+        fragmentTransaction.commit();
+    }
 }
