@@ -30,11 +30,7 @@ public class MainActivity extends AppCompatActivity {
                     addOrderList();
                     return true;
                 case R.id.nav_banhang:
-                    fragmentManager = getSupportFragmentManager();
-                    SaleFragment orderListFragment = new SaleFragment();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
-                    fragmentTransaction.commit();
+                    addOrderDetail();
                     return true;
                 case R.id.nav_sanpham:
 
@@ -80,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
     private void addOrderList() {
         fragmentManager = getSupportFragmentManager();
         OrderListFragment orderListFragment = new OrderListFragment();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void addOrderDetail() {
+        addOrderDetail();
+        fragmentManager = getSupportFragmentManager();
+        SaleFragment orderListFragment = new SaleFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
         fragmentTransaction.commit();

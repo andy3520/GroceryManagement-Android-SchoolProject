@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import panse.team.grocerymanagement.R;
 import panse.team.grocerymanagement.entities.Product;
@@ -32,7 +31,7 @@ public class SaleListAdapter extends ArrayAdapter<Product> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.sale_product_listview, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.custom_product_orderdetail_listview, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.tvProName = convertView.findViewById(R.id.tvProName);
             viewHolder.tvProQty = convertView.findViewById(R.id.tvProQty);
