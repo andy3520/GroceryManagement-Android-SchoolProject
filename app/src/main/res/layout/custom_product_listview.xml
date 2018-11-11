@@ -42,18 +42,19 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:text="Price"
         android:minWidth="125dp"
+        android:text="Price"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
+
     <TextView
         android:id="@+id/tvProductInfor"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:text="Thông tin SP"
         android:minWidth="125dp"
+        android:text="Thông tin SP"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 </LinearLayout>

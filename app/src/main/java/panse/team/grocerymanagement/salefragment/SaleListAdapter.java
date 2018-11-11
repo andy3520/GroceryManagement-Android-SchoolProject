@@ -59,7 +59,7 @@ public class SaleListAdapter extends ArrayAdapter<Product> {
             public void onClick(View v) {
                 double total = Double.parseDouble(SaleFragment.tvTotalPrice.getText().toString());
                 SaleFragment.tvTotalPrice.setText(String.valueOf((int) product.getProductPrice() + (int) total));
-                product.setProductQty(product.getProductQty()+1);
+                product.setProductQty(product.getProductQty() + 1);
                 viewHolder.tvProQty.setText(String.valueOf(product.getProductQty()));
                 viewHolder.tvTotalPrice.setText(String.valueOf(product.getProductQty() * (int) product.getProductPrice()));
             }
@@ -72,7 +72,7 @@ public class SaleListAdapter extends ArrayAdapter<Product> {
                 } else {
                     double total = Double.parseDouble(SaleFragment.tvTotalPrice.getText().toString());
                     SaleFragment.tvTotalPrice.setText(String.valueOf((int) total - (int) product.getProductPrice()));
-                    product.setProductQty(product.getProductQty()-1);
+                    product.setProductQty(product.getProductQty() - 1);
                     viewHolder.tvProQty.setText(String.valueOf(product.getProductQty()));
                     viewHolder.tvTotalPrice.setText(String.valueOf(product.getProductQty() * (int) product.getProductPrice()));
                 }
@@ -82,7 +82,7 @@ public class SaleListAdapter extends ArrayAdapter<Product> {
             @Override
             public void onClick(View v) {
                 double total = Double.parseDouble(SaleFragment.tvTotalPrice.getText().toString());
-                SaleFragment.tvTotalPrice.setText(String.valueOf((int)total-(int)product.getProductPrice()*product.getProductQty()));
+                SaleFragment.tvTotalPrice.setText(String.valueOf((int) total - (int) product.getProductPrice() * product.getProductQty()));
                 products.remove(position);
                 notifyDataSetChanged();
             }

@@ -15,9 +15,8 @@
         android:layout_weight="9"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:weightSum="10"
-       android:theme="@style/AppTheme.Toolbar"
-    >
+        android:theme="@style/AppTheme.Toolbar"
+        android:weightSum="10">
 
         <SearchView
             android:id="@+id/svProductList"
@@ -95,19 +94,20 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:text="Giá SP"
                     android:paddingEnd="15dp"
+                    android:text="Giá SP"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/textWhite" />
+
                 <TextView
                     android:id="@+id/tvProductInforHeader"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:minWidth="125dp"
                     android:gravity="center"
+                    android:minWidth="125dp"
+                    android:paddingEnd="15dp"
                     android:text="Thông tin SP"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"

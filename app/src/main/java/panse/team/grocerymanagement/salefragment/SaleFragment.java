@@ -32,13 +32,14 @@ import panse.team.grocerymanagement.entities.Product;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class SaleFragment extends ListFragment implements FrameFuction,BarcodeReader.BarcodeReaderListener {
+public class SaleFragment extends ListFragment implements FrameFuction, BarcodeReader.BarcodeReaderListener {
     private BarcodeReader barcodeReader;
     private ArrayList<Product> products;
     private ArrayList<Product> hardDataProduct;
     private SaleListAdapter adapter;
     private EditText edtCusName;
     public static TextView tvTotalPrice;
+
     @Override
     public void init(View view) {
         barcodeReader = (BarcodeReader) getChildFragmentManager().findFragmentById(R.id.fragmentReader);
@@ -100,15 +101,15 @@ public class SaleFragment extends ListFragment implements FrameFuction,BarcodeRe
                 } else {
                     if (isInProductArray(product)) {
                         product = getProductInArray(barcode.displayValue);
-                        product.setProductQty(product.getProductQty()+1);
+                        product.setProductQty(product.getProductQty() + 1);
                         adapter.notifyDataSetChanged();
-                        totalPrice+= product.getProductPrice();
+                        totalPrice += product.getProductPrice();
                         tvTotalPrice.setText(String.valueOf((int) totalPrice));
                         Toast.makeText(getActivity(), "Cập nhật số lượng sản phẩm", Toast.LENGTH_SHORT).show();
                     } else {
                         products.add(product);
                         adapter.notifyDataSetChanged();
-                        totalPrice+= product.getProductPrice();
+                        totalPrice += product.getProductPrice();
                         tvTotalPrice.setText(String.valueOf((int) totalPrice));
                         Toast.makeText(getActivity(), "Đã thêm sản phầm", Toast.LENGTH_SHORT).show();
                     }
@@ -117,7 +118,7 @@ public class SaleFragment extends ListFragment implements FrameFuction,BarcodeRe
                 getListView().post(new Runnable() {
                     @Override
                     public void run() {
-                        getListView().setSelection(adapter.getCount()-1);
+                        getListView().setSelection(adapter.getCount() - 1);
                     }
                 });
             }
@@ -151,7 +152,7 @@ public class SaleFragment extends ListFragment implements FrameFuction,BarcodeRe
     }
 
     public boolean isInProductArray(Product pro) {
-        if (products.contains(pro)){
+        if (products.contains(pro)) {
             return true;
         }
         return false;
@@ -167,7 +168,7 @@ public class SaleFragment extends ListFragment implements FrameFuction,BarcodeRe
     }
 
     public Product getProductInArray(String id) {
-        for (Product p: products){
+        for (Product p : products) {
             if (p.getProductId().equals(id)) {
                 return p;
             }
@@ -178,8 +179,8 @@ public class SaleFragment extends ListFragment implements FrameFuction,BarcodeRe
     public void calculateTotalPrice() {
         double total = Double.parseDouble(tvTotalPrice.getText().toString());
         for (Product p : products) {
-            total += p.getProductQty()*p.getProductPrice();
+            total += p.getProductQty() * p.getProductPrice();
         }
-        tvTotalPrice.setText(String.valueOf((int)total));
+        tvTotalPrice.setText(String.valueOf((int) total));
     }
 }
