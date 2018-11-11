@@ -44,10 +44,10 @@ private TextView tvProductIdHeader, tvProductNameHeader, tvProductQtyHeader, tvP
         registerEvent();
         registerForContextMenu(list);
         products = new ArrayList<Product>();
-products.add(new Product(12345678,"nuoc suoi",8,80000.5,"nuoc uong"));
-        products.add(new Product(12345679,"coca",5,50000,"nuoc uong"));
-        products.add(new Product(123456789,"pesi",3,30000,"nuoc uong"));
-        products.add(new Product(123456,"o long",10,100000,"nuoc uong"));
+products.add(new Product("12345678","nuoc suoi",8,80000.5,"nuoc uong"));
+        products.add(new Product("12345679","coca",5,50000,"nuoc uong"));
+        products.add(new Product("123456789","pesi",3,30000,"nuoc uong"));
+        products.add(new Product("123456","o long",10,100000,"nuoc uong"));
 Collections.sort(products,Product.ASC_productId);
 tvProductIdHeader.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.sharp_arrow_drop_down_24,0);
         adapter = new ProductListAdapter(getActivity(),R.layout.custom_product_listview,products);

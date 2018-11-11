@@ -70,16 +70,16 @@ public class Product implements Serializable {
     public static  Comparator<Product> ASC_productId= new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
-            Long proId1 = p1.getProductId();
-            Long proId2 = p2.getProductId();
+            String proId1 = p1.getProductId();
+            String proId2 = p2.getProductId();
             return proId1.compareTo(proId2);
         }
     };
     public static  Comparator<Product> DES_productId= new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
-            Long proId1 = p1.getProductId();
-            Long proId2 = p2.getProductId();
+            String proId1 = p1.getProductId();
+            String proId2 = p2.getProductId();
             return proId2.compareTo(proId1);
         }
     };
