@@ -1,11 +1,16 @@
 package panse.team.grocerymanagement.orderfragment;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,17 +26,23 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import panse.team.grocerymanagement.DetailOrdersContextMenuActivity;
+import panse.team.grocerymanagement.DetailProductContextMenuActivity;
+import panse.team.grocerymanagement.EditOrdersContextMenuActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
 import panse.team.grocerymanagement.entities.Order;
+import panse.team.grocerymanagement.entities.Product;
 
-public class OrderListFragment extends ListFragment implements View.OnClickListener,FrameFuction {
+
+public class OrderListFragment extends ListFragment implements View.OnClickListener, FrameFuction {
     private SearchView svOrderList;
     private ImageButton imgBtnAdd;
     private ArrayList<Order> orders;
     private TextView tvOrderIdHeader, tvOrderCusNameHeader, tvOrderDateHeader, tvOrderPriceHeader;
     private ListView list;
     private OrderListAdapter adapter;
+    private static final int edit = 11;
 
     // Khởi tạo các đối tượng theo id
     @Override
@@ -76,13 +87,13 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         orders.add(new Order("PP", "Phan Minh Phụng", new GregorianCalendar(2018, Calendar.AUGUST, 3).getTime(), 1000000));
         orders.add(new Order("C1", "Nguyễn Hữu Sơn", new GregorianCalendar(2013, Calendar.JANUARY, 3).getTime(), 6000000));
         orders.add(new Order("B6", "Huỳnh Tấn Phát", new GregorianCalendar(2017, Calendar.SEPTEMBER, 11).getTime(), 300000));
-        orders.add(new Order("HP", "Nguyễn Thị Ai", new GregorianCalendar(2017,Calendar.JANUARY,3).getTime(), 900000));
-        orders.add(new Order("A1", "Nguyễn Thị Nghiêng", new GregorianCalendar(2012,Calendar.NOVEMBER,29).getTime(), 150000));
-        orders.add(new Order("A6", "Nguyễn Văn Bành", new GregorianCalendar(2017,Calendar.DECEMBER,30).getTime(), 2000));
-        orders.add(new Order("C", "Trần Trang", new GregorianCalendar(2013,Calendar.JANUARY,20).getTime(), 300));
-        orders.add(new Order("PP", "Phan Minh Hồ", new GregorianCalendar(2017,Calendar.OCTOBER,14).getTime(), 8000));
-        orders.add(new Order("C1", "Nguyễn Lâm Nguy", new GregorianCalendar(2017,Calendar.JANUARY,30).getTime(), 56000));
-        orders.add(new Order("B6", "Huỳnh Văn Đạt", new GregorianCalendar(2011,Calendar.JANUARY,3).getTime(), 800500));
+        orders.add(new Order("HP", "Nguyễn Thị Ai", new GregorianCalendar(2017, Calendar.JANUARY, 3).getTime(), 900000));
+        orders.add(new Order("A1", "Nguyễn Thị Nghiêng", new GregorianCalendar(2012, Calendar.NOVEMBER, 29).getTime(), 150000));
+        orders.add(new Order("A6", "Nguyễn Văn Bành", new GregorianCalendar(2017, Calendar.DECEMBER, 30).getTime(), 2000));
+        orders.add(new Order("C", "Trần Trang", new GregorianCalendar(2013, Calendar.JANUARY, 20).getTime(), 300));
+        orders.add(new Order("PP", "Phan Minh Hồ", new GregorianCalendar(2017, Calendar.OCTOBER, 14).getTime(), 8000));
+        orders.add(new Order("C1", "Nguyễn Lâm Nguy", new GregorianCalendar(2017, Calendar.JANUARY, 30).getTime(), 56000));
+        orders.add(new Order("B6", "Huỳnh Văn Đạt", new GregorianCalendar(2011, Calendar.JANUARY, 3).getTime(), 800500));
         orders.add(new Order("HP", "Nguyễn Thị Tẹt", new Date(), 60000));
         // ^^^
 
@@ -97,6 +108,64 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         // ^^^
 
         return view;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Xóa don hang");
+                builder.setMessage("Bạn có muốn xóa đơn hàng ?");
+                builder.setNegativeButton("Không", null);
+                builder.setPositiveButton("Có", new AlertDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        orders.remove(menuInfo.position);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.show();
+                break;
+            case R.id.detail:
+                Intent intent = new Intent(getActivity(), DetailOrdersContextMenuActivity.class);
+                Bundle bundle = new Bundle();
+                Order order = orders.get(menuInfo.position);
+                bundle.putSerializable("order", order);
+                intent.putExtra("detail", bundle);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.edit:
+                Intent intent1 = new Intent(getActivity(), EditOrdersContextMenuActivity.class);
+                Bundle bundle1 = new Bundle();
+                Order order1 = orders.get(menuInfo.position);
+                bundle1.putSerializable("order1", order1);
+                intent1.putExtra("edit", bundle1);
+                getActivity().startActivity(intent1);
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == edit) {
+            if (resultCode == Activity.RESULT_OK) {
+                Bundle bundle = data.getBundleExtra("edit");
+                int pos = bundle.getInt("pos");
+                Order order = (Order) bundle.getSerializable("order1");
+                Order needEdit = orders.get(pos);
+                needEdit.setOrderId(order.getOrderId());
+                needEdit.setCustomerName(order.getCustomerName());
+                needEdit.setOrderDate(order.getOrderDateFull());
+                needEdit.setTotalOrderPrice(order.getTotalOrderPrice());
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     // Định nghĩa ContextMenu

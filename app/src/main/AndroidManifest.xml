@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SaleActivity" />
+        <activity android:name=".DetailProductContextMenuActivity" />
+        <activity android:name=".EditProductContextMenuActivity" />
+        <activity android:name=".DetailOrdersContextMenuActivity" />
+        <activity android:name=".salefragment.EditOrdersContextMenuActivity" />
+        <activity android:name=".EditOrdersContextMenuActivity"></activity>
     </application>
 
 </manifest>

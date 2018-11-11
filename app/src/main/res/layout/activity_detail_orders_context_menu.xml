@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+
+        android:theme="@style/AppTheme.Toolbar">
+
+        <ImageButton
+            android:id="@+id/imgTroVe"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/outline_arrow_back_24" />
+
+        <ImageButton
+            android:id="@+id/imgBtnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/baseline_add_circle_outline_24" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+
+        android:orientation="vertical"
+        android:weightSum="8"
+        android:theme="@style/AppTheme.Toolbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTiTle"
+            android:layout_gravity="center"
+            android:textSize="35dp"
+            android:text="dsdsdsdsđsd"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mã sản phẩm:"
+                android:textSize="20dp"
+                android:layout_weight="6"/>
+            <TextView
+                android:id="@+id/tvMaHD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:hint="ma hoa don"
+                android:layout_weight="4"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên khách hàng:"
+                android:textSize="20dp"
+                android:layout_weight="6"/>
+            <TextView
+                android:id="@+id/tvTenKH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="ten hoa don"
+                android:layout_weight="4"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Số lượng:"
+                android:textSize="20dp"
+                android:layout_weight="6"/>
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="ngay hoa don"
+                android:layout_weight="4"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giá sản phẩm:"
+                android:textSize="20dp"
+                android:layout_weight="6"/>
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="tong tien hoa don"
+                android:layout_weight="4"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
