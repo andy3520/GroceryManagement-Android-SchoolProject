@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addOrderDetail() {
-        addOrderDetail();
         fragmentManager = getSupportFragmentManager();
         SaleFragment orderListFragment = new SaleFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
