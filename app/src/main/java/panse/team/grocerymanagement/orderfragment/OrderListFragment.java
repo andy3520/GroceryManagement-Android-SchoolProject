@@ -2,6 +2,9 @@ package panse.team.grocerymanagement.orderfragment;
 
 import android.os.Bundle;
 
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -13,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +26,7 @@ import java.util.GregorianCalendar;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
 import panse.team.grocerymanagement.entities.Order;
+import panse.team.grocerymanagement.salefragment.SaleFragment;
 
 public class OrderListFragment extends ListFragment implements View.OnClickListener,FrameFuction {
     private SearchView svOrderList;
@@ -41,6 +44,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderCusNameHeader = view.findViewById(R.id.tvCustomerNameHeader);
         tvOrderDateHeader = view.findViewById(R.id.tvOrderDateHeader);
         tvOrderPriceHeader = view.findViewById(R.id.tvTotalOrderPriceHeader);
+        imgBtnAdd = view.findViewById(R.id.imgBtnAdd);
     }
     // ^^^
 
@@ -51,6 +55,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderDateHeader.setOnClickListener(this);
         tvOrderPriceHeader.setOnClickListener(this);
         tvOrderCusNameHeader.setOnClickListener(this);
+        imgBtnAdd.setOnClickListener(this);
     }
     // ^^^
 
@@ -134,6 +139,11 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 break;
             case R.id.tvTotalOrderPriceHeader:
                 sortTotalPrice();
+                break;
+            case R.id.imgBtnAdd:
+                callSaleFragment();
+                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                navigation.setSelectedItemId(R.id.nav_banhang);
                 break;
             // ^^^
 
@@ -249,4 +259,13 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderCusNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
     // ^^^
+
+    public void callSaleFragment(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        SaleFragment orderListFragment = new SaleFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
+        fragmentTransaction.commit();
+    }
+
 }

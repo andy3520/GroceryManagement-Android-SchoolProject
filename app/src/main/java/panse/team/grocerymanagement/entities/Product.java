@@ -3,6 +3,7 @@ package panse.team.grocerymanagement.entities;
 import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Product implements Serializable {
     private String productId;
@@ -133,4 +134,17 @@ public class Product implements Serializable {
         }
     };
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(productId, product.productId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(productId);
+    }
 }
