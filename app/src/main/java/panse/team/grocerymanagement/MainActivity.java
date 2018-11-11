@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import panse.team.grocerymanagement.orderfragment.OrderListFragment;
+import panse.team.grocerymanagement.productfragment.ProductListFragment;
 import panse.team.grocerymanagement.salefragment.SaleFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.commit();
                     return true;
                 case R.id.nav_sanpham:
-
+                     addProductList();
                     return true;
                 case R.id.nav_phantich:
 
@@ -84,5 +85,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
         fragmentTransaction.commit();
     }
-
+private  void addProductList(){
+    fragmentManager = getSupportFragmentManager();
+   ProductListFragment productListFragment = new ProductListFragment();
+    fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.replace(R.id.fragmentMainContainer, productListFragment);
+    fragmentTransaction.commit();
+}
 }

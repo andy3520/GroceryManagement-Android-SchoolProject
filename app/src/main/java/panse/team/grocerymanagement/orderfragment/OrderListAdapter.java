@@ -28,7 +28,7 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder;
+       ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.custom_order_listview, parent, false);
             viewHolder = new ViewHolder();

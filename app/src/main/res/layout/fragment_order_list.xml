@@ -16,7 +16,7 @@
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:weightSum="10"
-        app:theme="@style/AppTheme.Toolbar">
+        android:theme="@style/AppTheme.Toolbar">
 
         <SearchView
             android:id="@+id/svOrderList"

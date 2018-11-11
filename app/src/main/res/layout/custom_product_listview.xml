@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/tvProductId"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Mã SP"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="125dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Tên SP"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvProductQty"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Qty"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvProductPrice"
+        android:layout_width="135dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Price"
+        android:minWidth="125dp"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+    <TextView
+        android:id="@+id/tvProductInfor"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Thông tin SP"
+        android:minWidth="125dp"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+</LinearLayout>
