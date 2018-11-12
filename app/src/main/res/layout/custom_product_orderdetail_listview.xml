@@ -11,8 +11,9 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="@string/proName"/>
+        android:minWidth="200dp"
+        android:text="@string/proName"
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <ImageButton
         android:id="@+id/imgBtnDes"
@@ -27,8 +28,9 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="@string/saleQty" />
+        android:minWidth="30dp"
+        android:text="@string/saleQty"
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <ImageButton
         android:id="@+id/imgBtnIns"
@@ -43,8 +45,9 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="@string/proPrice" />
+        android:minWidth="125dp"
+        android:text="@string/proPrice"
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tvTotalPrice"
@@ -52,8 +55,9 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="@string/totalPrice" />
+        android:minWidth="125dp"
+        android:text="@string/totalPrice"
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <ImageButton
         android:id="@+id/imgBtnClear"

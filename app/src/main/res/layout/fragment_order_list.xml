@@ -15,8 +15,8 @@
         android:layout_weight="9"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:weightSum="10"
-        android:theme="@style/AppTheme.Toolbar">
+        android:theme="@style/AppTheme.Toolbar"
+        android:weightSum="10">
 
         <SearchView
             android:id="@+id/svOrderList"
@@ -93,9 +93,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:minWidth="125dp"
                     android:gravity="center"
+                    android:minWidth="125dp"
+                    android:paddingEnd="15dp"
                     android:text="@string/total"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"

@@ -11,18 +11,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SaleActivity" />
         <activity android:name=".DetailProductContextMenuActivity" />
         <activity android:name=".EditProductContextMenuActivity" />
         <activity android:name=".DetailOrdersContextMenuActivity" />
-        <activity android:name=".salefragment.EditOrdersContextMenuActivity" />
         <activity android:name=".EditOrdersContextMenuActivity"></activity>
     </application>
 

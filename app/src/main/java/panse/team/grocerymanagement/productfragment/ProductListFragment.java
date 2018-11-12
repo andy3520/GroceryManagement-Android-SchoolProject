@@ -32,13 +32,14 @@ import panse.team.grocerymanagement.R;
 import panse.team.grocerymanagement.entities.Product;
 
 
-
 public class ProductListFragment extends ListFragment implements View.OnClickListener, FrameFuction {
     private ArrayList<Product> products;
     private ListView list;
     private ProductListAdapter adapter;
     private TextView tvProductIdHeader, tvProductNameHeader, tvProductQtyHeader, tvProductPriceHeader, tvProductInforHeader;
     private static final int EDIT = 888;
+
+    @Override
     public void init(View view) {
         list = view.findViewById(android.R.id.list);
         tvProductIdHeader = view.findViewById(R.id.tvProductIdHeader);
@@ -62,14 +63,12 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         products.add(new Product("123456789", "pesi", 3, 30000, "nuoc uong"));
         products.add(new Product("123456", "o long", 10, 100000, "nuoc uong"));
         Collections.sort(products, Product.ASC_productId);
-        tvProductIdHeader.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
-
         adapter = new ProductListAdapter(getActivity(), R.layout.custom_product_listview, products);
         setListAdapter(adapter);
-
         return view;
     }
 
+    @Override
     public void registerEvent() {
         tvProductIdHeader.setOnClickListener(this);
         tvProductNameHeader.setOnClickListener(this);
@@ -105,9 +104,6 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         }
     }
 
-
-
-
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == android.R.id.list) {
@@ -120,7 +116,6 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
             inflater.inflate(R.menu.product_list_context_menu, menu);
         }
     }
-
 
 
     @Override
@@ -146,7 +141,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                 Bundle bundle = new Bundle();
                 Product product = products.get(menuInfo.position);
                 bundle.putSerializable("product", product);
-                intent.putExtra("detail",bundle);
+                intent.putExtra("detail", bundle);
                 getActivity().startActivity(intent);
                 break;
             case R.id.edit:
@@ -155,8 +150,8 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                 Bundle bundle1 = new Bundle();
                 Product product1 = products.get(menuInfo.position);
                 bundle1.putSerializable("product1", product1);
-                intent1.putExtra("edit",bundle1);
-               getActivity().startActivity(intent1);
+                intent1.putExtra("edit", bundle1);
+                getActivity().startActivity(intent1);
                 break;
 
         }
@@ -167,8 +162,8 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode ==EDIT){
-            if(resultCode==Activity.RESULT_OK){
+        if (requestCode == EDIT) {
+            if (resultCode == Activity.RESULT_OK) {
                 Bundle bundle = data.getBundleExtra("edit");
                 int pos = bundle.getInt("pos");
                 Product product = (Product) bundle.getSerializable("product1");

@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.ContextMenu;
@@ -18,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,13 +29,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import panse.team.grocerymanagement.DetailOrdersContextMenuActivity;
-import panse.team.grocerymanagement.DetailProductContextMenuActivity;
 import panse.team.grocerymanagement.EditOrdersContextMenuActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
 import panse.team.grocerymanagement.entities.Order;
-import panse.team.grocerymanagement.entities.Product;
-
+import panse.team.grocerymanagement.salefragment.SaleFragment;
 
 public class OrderListFragment extends ListFragment implements View.OnClickListener, FrameFuction {
     private SearchView svOrderList;
@@ -52,6 +52,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderCusNameHeader = view.findViewById(R.id.tvCustomerNameHeader);
         tvOrderDateHeader = view.findViewById(R.id.tvOrderDateHeader);
         tvOrderPriceHeader = view.findViewById(R.id.tvTotalOrderPriceHeader);
+        imgBtnAdd = view.findViewById(R.id.imgBtnAdd);
     }
     // ^^^
 
@@ -62,6 +63,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderDateHeader.setOnClickListener(this);
         tvOrderPriceHeader.setOnClickListener(this);
         tvOrderCusNameHeader.setOnClickListener(this);
+        imgBtnAdd.setOnClickListener(this);
     }
     // ^^^
 
@@ -183,6 +185,36 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
     }
     // ^^^
 
+//
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.edit:
+//                break;
+//            case R.id.delete:
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setTitle("Xóa hóa đơn");
+//                builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn chắn chắn muốn xóa hóa đơn?");
+//                builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//                builder.setNegativeButton("Hủy", null);
+//                builder.show();
+//                break;
+//            case R.id.add:
+//                callSaleFragment();
+//                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+//                navigation.setSelectedItemId(R.id.nav_banhang);
+//                break;
+//            case R.id.detail:
+//                break;
+//        }
+//        return super.onContextItemSelected(item);
+//    }
+
     //biến quản lý sort
     int click = 0;
     String term = "";
@@ -203,6 +235,11 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 break;
             case R.id.tvTotalOrderPriceHeader:
                 sortTotalPrice();
+                break;
+            case R.id.imgBtnAdd:
+                callSaleFragment();
+                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                navigation.setSelectedItemId(R.id.nav_banhang);
                 break;
             // ^^^
 
@@ -318,4 +355,13 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderCusNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
     // ^^^
+
+    public void callSaleFragment() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        SaleFragment orderListFragment = new SaleFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMainContainer, orderListFragment);
+        fragmentTransaction.commit();
+    }
+
 }
