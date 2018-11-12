@@ -1,5 +1,7 @@
 package panse.team.grocerymanagement.orderfragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.support.design.widget.BottomNavigationView;
@@ -9,6 +11,7 @@ import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -118,6 +121,36 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         }
     }
     // ^^^
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit:
+                break;
+            case R.id.delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Xóa hóa đơn");
+                builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn chắn chắn muốn xóa hóa đơn?");
+                builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("Hủy", null);
+                builder.show();
+                break;
+            case R.id.add:
+                callSaleFragment();
+                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                navigation.setSelectedItemId(R.id.nav_banhang);
+                break;
+            case R.id.detail:
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
 
     //biến quản lý sort
     int click = 0;
