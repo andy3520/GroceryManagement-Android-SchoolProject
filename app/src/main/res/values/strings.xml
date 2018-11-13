@@ -1,20 +1,26 @@
 <resources>
     <string name="app_name">GroceryManagement</string>
-    <string name="qldh">Đơn hàng</string>
-    <string name="tdh">Bán hàng</string>
-    <string name="qlsp">Sản phẩm</string>
-    <string name="pt">Thống kê</string>
-    <string name="title_home">Home</string>
-    <string name="total">Tổng tiền</string>
-    <string name="orderdate">Ngày mua</string>
-    <string name="cusName">Tên Khách</string>
-    <string name="orderId">Mã đơn</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="proName">Tên Sản Phẩm</string>
-    <string name="saleQty">Số lượng</string>
-    <string name="proPrice">Đơn giá</string>
-    <string name="totalPrice">Thành tiền</string>
+    <string name="nav_order">Đơn hàng</string>
+    <string name="nav_sale">Bán hàng</string>
+    <string name="nav_product">Sản phẩm</string>
+    <string name="nav_stat">Thống kê</string>
+
+    <string name="header_totalPrice">Tổng tiền</string>
+    <string name="header_orderDate">Ngày mua</string>
+    <string name="header_cusName">Tên Khách</string>
+    <string name="header_orderId">Mã đơn</string>
+    <string name="header_qty">Số lượng</string>
+    <string name="header_singlePrice">Đơn giá</string>
+    <string name="header_totalQtyPrice">Thành tiền</string>
+    <string name="header_proId">Mã SP</string>
+    <string name="header_proName">Tên SP</string>
+    <string name="des_insBtn">Tăng số lượng</string>
+    <string name="des_desBtn">Giảm số lượng</string>
+    <string name="des_clearBtn">Xóa sản phẩm</string>
+    <string name="des_addBtn">Tạo mới</string>
+    <string name="header_info">Mô tả</string>
+    <string name="des_backBtn">Trở về</string>
+    <string name="title_detail">Chi tiết</string>
 
 </resources>

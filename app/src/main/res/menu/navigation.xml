@@ -4,21 +4,21 @@
     <item
         android:id="@+id/nav_donhang"
         android:icon="@drawable/baseline_receipt_black_48dp"
-        android:title="@string/qldh" />
+        android:title="@string/nav_order" />
 
     <item
         android:id="@+id/nav_banhang"
         android:icon="@drawable/outline_attach_money_black_48dp"
-        android:title="@string/tdh" />
+        android:title="@string/nav_sale" />
 
     <item
         android:id="@+id/nav_sanpham"
         android:icon="@drawable/outline_store_black_48dp"
-        android:title="@string/qlsp" />
+        android:title="@string/nav_product" />
 
     <item
         android:id="@+id/nav_phantich"
         android:icon="@drawable/outline_show_chart_black_48dp"
-        android:title="@string/pt" />
+        android:title="@string/nav_stat" />
 
 </menu>

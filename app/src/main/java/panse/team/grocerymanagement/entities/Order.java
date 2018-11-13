@@ -6,6 +6,7 @@ import java.text.Normalizer;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Order implements Serializable {
     private String orderId;
@@ -13,6 +14,7 @@ public class Order implements Serializable {
     private String customerName;
     private Date orderDate;
 
+    // constructor
     public Order(String orderId, String customerName, Date orderDate, double totalOrderPrice) {
         this.orderId = orderId;
         this.totalOrderPrice = totalOrderPrice;
@@ -24,6 +26,8 @@ public class Order implements Serializable {
 
     }
 
+
+    // geter & setter
     public String getCustomerName() {
         return customerName;
     }
@@ -60,11 +64,12 @@ public class Order implements Serializable {
         this.orderDate = orderDate;
     }
 
-    //get customer firstnam
+    //get customer firstname
     public static String getOrderCusFirstName(String customerName) {
         String[] words = customerName.split(" ");
         return words[words.length - 1];
     }
+
     //sort
     public static Comparator<Order> ASC_orderIdComparator = new Comparator<Order>() {
         @Override
@@ -140,4 +145,18 @@ public class Order implements Serializable {
     };
 
 
+    // So sánh 2 đối tượng bằng id
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(orderId, order.orderId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(orderId);
+    }
 }

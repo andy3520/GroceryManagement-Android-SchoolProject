@@ -26,8 +26,8 @@ public class EditProductContextMenuActivity extends AppCompatActivity {
         edtGia = findViewById(R.id.edtGia);
         tvTitle = findViewById(R.id.tvTiTle);
         edtThongTin = findViewById(R.id.edtThongTin);
-        imgSave = findViewById(R.id.imgSave);
-        imgTroVe = findViewById(R.id.imgTroVe);
+        imgSave = findViewById(R.id.imgBtnSave);
+        imgTroVe = findViewById(R.id.imgBtnBack);
         imgTroVe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -32,7 +32,12 @@ import panse.team.grocerymanagement.DetailOrdersContextMenuActivity;
 import panse.team.grocerymanagement.EditOrdersContextMenuActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
+import panse.team.grocerymanagement.dao.OrderDetailManager;
+import panse.team.grocerymanagement.dao.OrderManager;
+import panse.team.grocerymanagement.dao.ProductManager;
 import panse.team.grocerymanagement.entities.Order;
+import panse.team.grocerymanagement.entities.OrderDetails;
+import panse.team.grocerymanagement.entities.Product;
 import panse.team.grocerymanagement.salefragment.SaleFragment;
 
 public class OrderListFragment extends ListFragment implements View.OnClickListener, FrameFuction {
@@ -42,7 +47,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
     private TextView tvOrderIdHeader, tvOrderCusNameHeader, tvOrderDateHeader, tvOrderPriceHeader;
     private ListView list;
     private OrderListAdapter adapter;
-    private static final int edit = 11;
+    private static final int EDIT = 2;
 
     // Khởi tạo các đối tượng theo id
     @Override
@@ -54,7 +59,6 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderPriceHeader = view.findViewById(R.id.tvTotalOrderPriceHeader);
         imgBtnAdd = view.findViewById(R.id.imgBtnAdd);
     }
-    // ^^^
 
     // Đăng kí sự kiện
     @Override
@@ -65,7 +69,6 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderCusNameHeader.setOnClickListener(this);
         imgBtnAdd.setOnClickListener(this);
     }
-    // ^^^
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,55 +77,78 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
         init(view);
         registerEvent();
-        // ^^^
 
         // Đăng kí context menu
         registerForContextMenu(list);
-        // ^^^
 
+        // Sqlite manager
+        ProductManager proMNG;
+        OrderManager ordMNG;
+        OrderDetailManager ordDtMNG;
+        ordMNG = new OrderManager(getActivity());
+        proMNG = new ProductManager(getActivity());
+        ordDtMNG = new OrderDetailManager(getActivity());
+
+        // Lấy danh sách order từ CSDL
+        orders = ordMNG.getAllOrder();
 
         // Fake data để test
-        orders = new ArrayList<>();
-        orders.add(new Order("A1EASD", "Nguyễn Thị Nghiêng", new GregorianCalendar(2017, Calendar.JANUARY, 3).getTime(), 10000));
-        orders.add(new Order("A6", "Nguyễn Hiếu Đức Ân", new GregorianCalendar(2017, Calendar.APRIL, 1).getTime(), 150000));
-        orders.add(new Order("C", "Trần Trung Nam", new GregorianCalendar(2016, Calendar.JULY, 15).getTime(), 5000));
-        orders.add(new Order("PP", "Phan Minh Phụng", new GregorianCalendar(2018, Calendar.AUGUST, 3).getTime(), 1000000));
-        orders.add(new Order("C1", "Nguyễn Hữu Sơn", new GregorianCalendar(2013, Calendar.JANUARY, 3).getTime(), 6000000));
-        orders.add(new Order("B6", "Huỳnh Tấn Phát", new GregorianCalendar(2017, Calendar.SEPTEMBER, 11).getTime(), 300000));
-        orders.add(new Order("HP", "Nguyễn Thị Ai", new GregorianCalendar(2017, Calendar.JANUARY, 3).getTime(), 900000));
-        orders.add(new Order("A1", "Nguyễn Thị Nghiêng", new GregorianCalendar(2012, Calendar.NOVEMBER, 29).getTime(), 150000));
-        orders.add(new Order("A6", "Nguyễn Văn Bành", new GregorianCalendar(2017, Calendar.DECEMBER, 30).getTime(), 2000));
-        orders.add(new Order("C", "Trần Trang", new GregorianCalendar(2013, Calendar.JANUARY, 20).getTime(), 300));
-        orders.add(new Order("PP", "Phan Minh Hồ", new GregorianCalendar(2017, Calendar.OCTOBER, 14).getTime(), 8000));
-        orders.add(new Order("C1", "Nguyễn Lâm Nguy", new GregorianCalendar(2017, Calendar.JANUARY, 30).getTime(), 56000));
-        orders.add(new Order("B6", "Huỳnh Văn Đạt", new GregorianCalendar(2011, Calendar.JANUARY, 3).getTime(), 800500));
-        orders.add(new Order("HP", "Nguyễn Thị Tẹt", new Date(), 60000));
-        // ^^^
+//        orders = new ArrayList<>();
+//        orders.add(new Order("A1EASD", "Nguyễn Thị Nghiêng", new GregorianCalendar(2017, Calendar.JANUARY, 3).getTime(), 10000));
+//        orders.add(new Order("A6", "Nguyễn Hiếu Đức Ân", new GregorianCalendar(2017, Calendar.APRIL, 1).getTime(), 150000));
+//        orders.add(new Order("C", "Trần Trung Nam", new GregorianCalendar(2016, Calendar.JULY, 15).getTime(), 5000));
+//        orders.add(new Order("PP", "Phan Minh Phụng", new GregorianCalendar(2018, Calendar.AUGUST, 3).getTime(), 1000000));
+//        orders.add(new Order("C1", "Nguyễn Hữu Sơn", new GregorianCalendar(2013, Calendar.JANUARY, 3).getTime(), 6000000));
+//        orders.add(new Order("B6", "Huỳnh Tấn Phát", new GregorianCalendar(2017, Calendar.SEPTEMBER, 11).getTime(), 300000));
+//        orders.add(new Order("HP", "Nguyễn Thị Ai", new GregorianCalendar(2017, Calendar.JANUARY, 3).getTime(), 900000));
+//        orders.add(new Order("A1", "Nguyễn Thị Nghiêng", new GregorianCalendar(2012, Calendar.NOVEMBER, 29).getTime(), 150000));
+//        orders.add(new Order("A6", "Nguyễn Văn Bành", new GregorianCalendar(2017, Calendar.DECEMBER, 30).getTime(), 2000));
+//        orders.add(new Order("C", "Trần Trang", new GregorianCalendar(2013, Calendar.JANUARY, 20).getTime(), 300));
+//        orders.add(new Order("PP", "Phan Minh Hồ", new GregorianCalendar(2017, Calendar.OCTOBER, 14).getTime(), 8000));
+//        orders.add(new Order("C1", "Nguyễn Lâm Nguy", new GregorianCalendar(2017, Calendar.JANUARY, 30).getTime(), 56000));
+//        orders.add(new Order("B6", "Huỳnh Văn Đạt", new GregorianCalendar(2011, Calendar.JANUARY, 3).getTime(), 800500));
+//        orders.add(new Order("HP", "Nguyễn Thị Tẹt", new Date(), 60000));
 
         // Mặc định sort bằng orderId ASC
         Collections.sort(orders, Order.ASC_orderIdComparator);
         tvOrderIdHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
-        // ^^^
 
         // Array Adapter Customize của ListView và set ListAdapter cho fragment
         adapter = new OrderListAdapter(getActivity(), R.layout.custom_order_listview, orders);
         setListAdapter(adapter);
-        // ^^^
 
         return view;
     }
 
+    // Định nghĩa ContextMenu
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == android.R.id.list) {
+            MenuInflater inflater = getActivity().getMenuInflater();
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            Order order = orders.get(info.position);
+
+            //setTitle cho menu
+            menu.setHeaderTitle(order.getOrderId() + " " + order.getCustomerName());
+            inflater.inflate(R.menu.order_list_context_menu, menu);
+        }
+    }
+
+
+    // Sự kiện cho các item trong context menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
+
+            // Xóa sẽ hiện dialog xác nhận
             case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Xóa don hang");
-                builder.setMessage("Bạn có muốn xóa đơn hàng ?");
-                builder.setNegativeButton("Không", null);
-                builder.setPositiveButton("Có", new AlertDialog.OnClickListener() {
+                builder.setTitle("Xóa hóa đơn");
+                builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn chắn chắn muốn xóa hóa đơn?");
+                builder.setNegativeButton("Hủy", null);
+                builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         orders.remove(menuInfo.position);
@@ -130,7 +156,9 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                     }
                 });
                 builder.show();
-                break;
+                return true;
+
+            // Gọi acti chi tiết
             case R.id.detail:
                 Intent intent = new Intent(getActivity(), DetailOrdersContextMenuActivity.class);
                 Bundle bundle = new Bundle();
@@ -138,24 +166,33 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 bundle.putSerializable("order", order);
                 intent.putExtra("detail", bundle);
                 getActivity().startActivity(intent);
-                break;
+                return true;
+
+            // Gọi acti chỉnh sửa
             case R.id.edit:
                 Intent intent1 = new Intent(getActivity(), EditOrdersContextMenuActivity.class);
                 Bundle bundle1 = new Bundle();
                 Order order1 = orders.get(menuInfo.position);
                 bundle1.putSerializable("order1", order1);
                 intent1.putExtra("edit", bundle1);
-                getActivity().startActivity(intent1);
-                break;
+                getActivity().startActivityForResult(intent1, EDIT);
+                return true;
+
+            // Chuyển sang tab bán hàng để tạo hóa đơn
+            case R.id.add:
+                callSaleFragment();
+                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                navigation.setSelectedItemId(R.id.nav_banhang);
+                return true;
         }
-        return super.onContextItemSelected(item);
+        return false;
     }
 
-
+    // Đợi kết quả edit
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == edit) {
+        if (requestCode == EDIT) {
             if (resultCode == Activity.RESULT_OK) {
                 Bundle bundle = data.getBundleExtra("edit");
                 int pos = bundle.getInt("pos");
@@ -170,56 +207,9 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         }
     }
 
-    // Định nghĩa ContextMenu
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId() == android.R.id.list) {
-            MenuInflater inflater = getActivity().getMenuInflater();
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Order order = orders.get(info.position);
-            //setTitle cho menu
-            menu.setHeaderTitle(order.getOrderId() + " " + order.getCustomerName());
-            inflater.inflate(R.menu.order_list_context_menu, menu);
-        }
-    }
-    // ^^^
-
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.edit:
-//                break;
-//            case R.id.delete:
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                builder.setTitle("Xóa hóa đơn");
-//                builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn chắn chắn muốn xóa hóa đơn?");
-//                builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-//                builder.setNegativeButton("Hủy", null);
-//                builder.show();
-//                break;
-//            case R.id.add:
-//                callSaleFragment();
-//                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
-//                navigation.setSelectedItemId(R.id.nav_banhang);
-//                break;
-//            case R.id.detail:
-//                break;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
-
-    //biến quản lý sort
-    int click = 0;
-    String term = "";
 
     // Các sự kiện OnClick
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -236,6 +226,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
             case R.id.tvTotalOrderPriceHeader:
                 sortTotalPrice();
                 break;
+            // Sự kiện nút add
             case R.id.imgBtnAdd:
                 callSaleFragment();
                 BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
@@ -245,6 +236,10 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
 
         }
     }
+
+    // biến quản lý sort
+    int click = 0;
+    String term = "";
 
     // Các hàm sắp xếp
     public void sortOrderId() {
@@ -354,8 +349,8 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderDateHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         tvOrderCusNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
-    // ^^^
 
+    // Gọi fragment bán hàng khi bấm nút add
     public void callSaleFragment() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         SaleFragment orderListFragment = new SaleFragment();

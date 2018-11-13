@@ -22,7 +22,8 @@
             android:id="@+id/svProductList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            tools:ignore="NestedWeights">
 
         </SearchView>
 
@@ -32,6 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="8"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/des_addBtn"
             android:scaleType="center"
             android:src="@drawable/baseline_add_circle_outline_24" />
     </LinearLayout>
@@ -55,11 +57,13 @@
 
                 <TextView
                     android:id="@+id/tvProductIdHeader"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:text="Mã SP"
+                    android:maxWidth="150dp"
+                    android:minWidth="100dp"
+                    android:text="@string/header_proId"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/textWhite"
@@ -68,47 +72,53 @@
 
                 <TextView
                     android:id="@+id/tvProductNameHeader"
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:text="Tên SP"
+                    android:maxWidth="300dp"
+                    android:minWidth="200dp"
+                    android:text="@string/header_proName"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/textWhite" />
 
                 <TextView
                     android:id="@+id/tvProductQtyHeader"
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:minWidth="100dp"
+                    android:maxWidth="200dp"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:text="Số lượng"
+                    android:text="@string/header_qty"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/textWhite" />
 
                 <TextView
                     android:id="@+id/tvProductPriceHeader"
-                    android:layout_width="125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:paddingEnd="15dp"
-                    android:text="Giá SP"
+                    android:minWidth="100dp"
+                    android:maxWidth="200dp"
+                    android:text="@string/header_singlePrice"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/textWhite" />
 
                 <TextView
-                    android:id="@+id/tvProductInforHeader"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/tvProductInfoHeader"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
+                    android:layout_marginEnd="25dp"
                     android:gravity="center"
-                    android:minWidth="125dp"
-                    android:paddingEnd="15dp"
-                    android:text="Thông tin SP"
+                    android:minWidth="200dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/header_info"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/textWhite" />
@@ -116,7 +126,7 @@
 
             <ListView
                 android:id="@android:id/list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 

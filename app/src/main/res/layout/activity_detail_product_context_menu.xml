@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,27 +13,29 @@
         android:layout_weight="9"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-
-        android:theme="@style/AppTheme.Toolbar">
-
-        <ImageButton
-            android:id="@+id/imgTroVe"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="300dp"
-            android:background="@android:color/transparent"
-            android:scaleType="center"
-            android:src="@drawable/outline_arrow_back_24" />
+        android:weightSum="10">
 
         <ImageButton
-            android:id="@+id/imgBtnAdd"
-            android:layout_width="wrap_content"
+            android:id="@+id/imgBtnBack"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_weight="8"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/des_backBtn"
             android:scaleType="center"
-            android:src="@drawable/baseline_add_circle_outline_24" />
+            android:src="@drawable/outline_arrow_back_24"
+            tools:ignore="NestedWeights" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/title_detail"
+            android:textAlignment="center"
+            android:textColor="@color/textWhite"
+            android:textSize="22sp" />
     </LinearLayout>
 
 
@@ -42,112 +43,129 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        android:orientation="vertical"
-        android:weightSum="8"
-        android:theme="@style/AppTheme.Toolbar">
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvProductName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvTiTle"
             android:layout_gravity="center"
-            android:textSize="35dp"
-            android:text="dsdsdsdsđsd"/>
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="50dp"
+            android:text="@string/header_proName"
+            android:textAlignment="center"
+            android:textSize="36sp" />
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:weightSum="10">
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mã sản phẩm:"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="@string/header_proId"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+
             <TextView
-                android:id="@+id/tvMaSP"
+                android:id="@+id/tvProductId"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="ma san pham"
-                android:layout_weight="4"/>
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="@string/header_proId"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:weightSum="10">
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên sản phẩm:"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="@string/header_qty"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+
             <TextView
-                android:id="@+id/tvTenSanPham"
+                android:id="@+id/tvProductQty"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="ma san pham"
-                android:layout_weight="4"/>
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="@string/header_qty"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:weightSum="10">
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Số lượng:"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="@string/header_singlePrice"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+
             <TextView
-                android:id="@+id/tvSoLuong"
+                android:id="@+id/tvProductPrice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="ma san pham"
-                android:layout_weight="4"/>
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="@string/header_singlePrice"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:weightSum="10">
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Giá sản phẩm:"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="@string/header_info"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+
             <TextView
-                android:id="@+id/tvGia"
+                android:id="@+id/tvProductInfo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="ma san pham"
-                android:layout_weight="4"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thông tin:"
-                android:textSize="20dp"
-                android:layout_weight="6"/>
-            <TextView
-                android:id="@+id/tvThongTin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="ma san pham"
-                android:layout_weight="4"/>
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="@string/header_info"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

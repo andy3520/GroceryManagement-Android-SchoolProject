@@ -18,17 +18,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import panse.team.grocerymanagement.DetailProductContextMenuActivity;
 import panse.team.grocerymanagement.EditProductContextMenuActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
 
+import panse.team.grocerymanagement.dao.ProductManager;
 import panse.team.grocerymanagement.entities.Product;
 
 
@@ -36,8 +36,8 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     private ArrayList<Product> products;
     private ListView list;
     private ProductListAdapter adapter;
-    private TextView tvProductIdHeader, tvProductNameHeader, tvProductQtyHeader, tvProductPriceHeader, tvProductInforHeader;
-    private static final int EDIT = 888;
+    private TextView tvProductIdHeader, tvProductNameHeader, tvProductQtyHeader, tvProductPriceHeader, tvProductInfoHeader;
+    private static final int EDIT = 99;
 
     @Override
     public void init(View view) {
@@ -46,26 +46,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         tvProductNameHeader = view.findViewById(R.id.tvProductNameHeader);
         tvProductQtyHeader = view.findViewById(R.id.tvProductQtyHeader);
         tvProductPriceHeader = view.findViewById(R.id.tvProductPriceHeader);
-        tvProductInforHeader = view.findViewById(R.id.tvProductInforHeader);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_list, container, false);
-        init(view);
-
-        registerEvent();
-        registerForContextMenu(list);
-        products = new ArrayList<Product>();
-        products.add(new Product("12345678", "nuoc suoi", 8, 80000.5, "nuoc uong"));
-        products.add(new Product("12345679", "coca", 5, 50000, "nuoc uong"));
-        products.add(new Product("123456789", "pesi", 3, 30000, "nuoc uong"));
-        products.add(new Product("123456", "o long", 10, 100000, "nuoc uong"));
-        Collections.sort(products, Product.ASC_productId);
-        adapter = new ProductListAdapter(getActivity(), R.layout.custom_product_listview, products);
-        setListAdapter(adapter);
-        return view;
+        tvProductInfoHeader = view.findViewById(R.id.tvProductInfoHeader);
     }
 
     @Override
@@ -74,40 +55,53 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         tvProductNameHeader.setOnClickListener(this);
         tvProductQtyHeader.setOnClickListener(this);
         tvProductPriceHeader.setOnClickListener(this);
-        tvProductInforHeader.setOnClickListener(this);
+        tvProductInfoHeader.setOnClickListener(this);
     }
 
-
-    //biến quản lý sort
-    int click = 0;
-    String term = "";
-
-    // Các sự kiện OnClick
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            //Sự kiện sort
-            case R.id.tvProductIdHeader:
-                sortProductId();
-                break;
-            case R.id.tvProductNameHeader:
-                sortProductName();
-                break;
-            case R.id.tvProductQtyHeader:
-                sortProductQty();
-                break;
-            case R.id.tvProductPriceHeader:
-                sortProductPrice();
-                break;
-            // ^^^
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_product_list, container, false);
+        // Khởi tạo view và sự kiện
+        init(view);
+        registerEvent();
 
-        }
+        // Đăng kí contextmenu cho list
+        registerForContextMenu(list);
+
+        // SQLite Product manager
+        ProductManager productManager = new ProductManager(getActivity());
+        // Lấy danh sách sản phẩm trong database
+        products = productManager.getAllProduct();
+
+        // Import data product CHỈ CHẠY 1 LẦN
+//        proMNG.createProduct(new Product("18091000", "Mì hảo hảo", 50, 5000, "Mì hảo hảo tôm chua cay"));
+//        proMNG.createProduct(new Product("18091001", "Bút bi Thiên Long", 600, 5000, "Bút bi Thiên Long BTL1"));
+//        proMNG.createProduct(new Product("18091002", "Nước mắn Nam Ngư", 20, 29000, "Thơm ngon"));
+//        proMNG.createProduct(new Product("18091003", "Coca cola 500ml", 50, 8000, "Nước ngọt coca cola 500ml"));
+//        proMNG.createProduct(new Product("18091004", "Mì Ly Omachi Xúc Xích", 50, 17000, "Mì Omachi có xúc xích 200g "));
+//        proMNG.createProduct(new Product("18091005", "Trứng gà", 30, 5000, "Trứng gà công nghiệp"));
+//        proMNG.createProduct(new Product("18091006", "Sữa đặc Phương Nam", 10, 30000, "Mì hảo hảo tôm chua cay"));
+//        proMNG.createProduct(new Product("18091007", "Bánh bông lan cuộn", 4, 23000, "Bánh bông lan cuộn 200g"));
+//        proMNG.createProduct(new Product("18091008", "Kim chi gói 200g", 10, 30000, "Kim chi đóng gói 200g"));
+//        proMNG.createProduct(new Product("18091009", "Bánh bao trứng cút", 5, 15000, "Bánh bao thịt nhân trứng cút"));
+
+        // Mặc định sort bằng proId ASC
+        Collections.sort(products, Product.ASC_productId);
+        tvProductIdHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
+
+        // Array Adapter Customize của ListView và set ListAdapter cho fragment
+        adapter = new ProductListAdapter(Objects.requireNonNull(getActivity()), R.layout.custom_product_listview, products);
+        setListAdapter(adapter);
+
+        return view;
     }
 
+    // Đĩnh nghĩa context menu
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == android.R.id.list) {
-            MenuInflater inflater = getActivity().getMenuInflater();
+            MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Product product = products.get(info.position);
 
@@ -118,12 +112,15 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     }
 
 
+    // Sự kiện của item trong context menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
+
+            // Cảnh báo xóa trong dialog
             case R.id.delete:
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
                 builder.setTitle("Xóa sản phẩm");
                 builder.setMessage("Bạn có muốn xóa sản phẩm ?");
                 builder.setNegativeButton("Không", null);
@@ -135,30 +132,33 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                     }
                 });
                 builder.show();
-                break;
+                return true;
+
+            // Xem chi tiết
             case R.id.detail:
                 Intent intent = new Intent(getActivity(), DetailProductContextMenuActivity.class);
                 Bundle bundle = new Bundle();
                 Product product = products.get(menuInfo.position);
                 bundle.putSerializable("product", product);
                 intent.putExtra("detail", bundle);
-                getActivity().startActivity(intent);
-                break;
-            case R.id.edit:
+                Objects.requireNonNull(getActivity()).startActivity(intent);
+                return true;
 
+            // Cập nhật sản phẩm
+            case R.id.edit:
                 Intent intent1 = new Intent(getActivity(), EditProductContextMenuActivity.class);
                 Bundle bundle1 = new Bundle();
                 Product product1 = products.get(menuInfo.position);
                 bundle1.putSerializable("product1", product1);
                 intent1.putExtra("edit", bundle1);
-                getActivity().startActivity(intent1);
-                break;
-
+                Objects.requireNonNull(getActivity()).startActivityForResult(intent1, EDIT);
+                return true;
         }
 
-        return super.onContextItemSelected(item);
+        return false;
     }
 
+    // Đợi kết quả edit
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -177,60 +177,116 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         }
     }
 
-    //sap sep theo ma san pham
+    // Click item list để xem chi tiết
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(getActivity(), DetailProductContextMenuActivity.class);
+        Bundle bundle = new Bundle();
+        Product product = products.get(position);
+        bundle.putSerializable("product", product);
+        intent.putExtra("detail", bundle);
+        Objects.requireNonNull(getActivity()).startActivity(intent);
+    }
+
+    // Các sự kiện OnClick
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //Sự kiện sort
+            case R.id.tvProductIdHeader:
+                sortProductId();
+                break;
+            case R.id.tvProductNameHeader:
+                sortProductName();
+                break;
+            case R.id.tvProductQtyHeader:
+                sortProductQty();
+                break;
+            case R.id.tvProductPriceHeader:
+                sortProductPrice();
+                break;
+        }
+    }
+
+    // biến quản lý sort
+    int click = 0;
+    String term = "";
+
+    // Sắp xếp theo mã sp
     public void sortProductId() {
         if (click == 0 && term.equals("")) {
             click = 1;
             term = "a";
             Collections.sort(products, Product.ASC_productId);
             adapter.notifyDataSetChanged();
-            //resetArrow();
+            resetArrow();
             tvProductIdHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
         } else if (click == 1 && term.equals("a")) {
             click = 0;
             term = "";
             Collections.sort(products, Product.DES_productId);
             adapter.notifyDataSetChanged();
-            // resetArrow();
+            resetArrow();
             tvProductIdHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_up_24, 0);
+        } else {
+            click = 1;
+            term = "a";
+            Collections.sort(products, Product.ASC_productId);
+            adapter.notifyDataSetChanged();
+            resetArrow();
+            tvProductIdHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
         }
     }
-    //sap sep theo ten san pham
 
+    // Sắp xếp theo tên sp
     public void sortProductName() {
         if (click == 0 && term.equals("")) {
             click = 1;
-            term = "a";
+            term = "b";
             Collections.sort(products, Product.ASC_productName);
             adapter.notifyDataSetChanged();
-            //resetArrow();
+            resetArrow();
             tvProductNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
-        } else if (click == 1 && term.equals("a")) {
+        } else if (click == 1 && term.equals("b")) {
             click = 0;
             term = "";
             Collections.sort(products, Product.DES_productName);
             adapter.notifyDataSetChanged();
-            // resetArrow();
+            resetArrow();
             tvProductNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_up_24, 0);
+        } else {
+            click = 1;
+            term = "b";
+            Collections.sort(products, Product.ASC_productName);
+            adapter.notifyDataSetChanged();
+            resetArrow();
+            tvProductNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
         }
     }
 
-    //sap sep theo so luong
+    // Sắp xếp sp theo số lượng tồn
     public void sortProductQty() {
         if (click == 0 && term.equals("")) {
             click = 1;
-            term = "a";
+            term = "c";
             Collections.sort(products, Product.ASC_productQty);
             adapter.notifyDataSetChanged();
-            //resetArrow();
+            resetArrow();
             tvProductQtyHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
-        } else if (click == 1 && term.equals("a")) {
+        } else if (click == 1 && term.equals("c")) {
             click = 0;
             term = "";
             Collections.sort(products, Product.DES_productQty);
             adapter.notifyDataSetChanged();
-            // resetArrow();
+            resetArrow();
             tvProductQtyHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_up_24, 0);
+        } else {
+            click = 1;
+            term = "c";
+            Collections.sort(products, Product.ASC_productQty);
+            adapter.notifyDataSetChanged();
+            resetArrow();
+            tvProductQtyHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
         }
     }
 
@@ -238,18 +294,34 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     public void sortProductPrice() {
         if (click == 0 && term.equals("")) {
             click = 1;
-            term = "a";
+            term = "d";
             Collections.sort(products, Product.ASC_productPrice);
             adapter.notifyDataSetChanged();
-            //resetArrow();
+            resetArrow();
             tvProductPriceHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
-        } else if (click == 1 && term.equals("a")) {
+        } else if (click == 1 && term.equals("d")) {
             click = 0;
             term = "";
             Collections.sort(products, Product.DES_productPrice);
             adapter.notifyDataSetChanged();
-            // resetArrow();
+            resetArrow();
             tvProductPriceHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_up_24, 0);
+        } else {
+            click = 1;
+            term = "d";
+            Collections.sort(products, Product.ASC_productPrice);
+            adapter.notifyDataSetChanged();
+            resetArrow();
+            tvProductPriceHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sharp_arrow_drop_down_24, 0);
         }
+    }
+
+    // Xóa mũi tên sort
+    public void resetArrow() {
+        tvProductIdHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        tvProductNameHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        tvProductQtyHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        tvProductPriceHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        tvProductInfoHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
 }

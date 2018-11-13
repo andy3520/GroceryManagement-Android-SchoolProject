@@ -20,6 +20,8 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
     private int resource;
     private ArrayList<Order> orders;
 
+
+    // Constructor
     public OrderListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Order> orders) {
         super(context, resource, orders);
         this.context = context;
@@ -27,10 +29,12 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
         this.orders = orders;
     }
 
+    // Vẽ view
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
+        // Lưu vào view holder để không phải load lại nặng
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.custom_order_listview, parent, false);
             viewHolder = new ViewHolder();
@@ -46,7 +50,7 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
         viewHolder.tvOrderId.setText(order.getOrderId());
         viewHolder.tvCustomerName.setText(Order.getOrderCusFirstName(order.getCustomerName()));
         viewHolder.tvOrderDate.setText(order.getOrderDate());
-        viewHolder.tvTotalOrderPrice.setText((int) order.getTotalOrderPrice() + "");
+        viewHolder.tvTotalOrderPrice.setText(String.valueOf((int) order.getTotalOrderPrice()));
         return convertView;
     }
 

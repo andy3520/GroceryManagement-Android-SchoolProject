@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:text="@string/orderId"
+        android:text="@string/header_orderId"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:text="@string/cusName"
+        android:text="@string/header_cusName"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:text="@string/orderdate"
+        android:text="@string/header_orderDate"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
@@ -42,7 +42,7 @@
         android:layout_marginStart="15dp"
         android:gravity="center"
         android:minWidth="125dp"
-        android:text="@string/total"
+        android:text="@string/header_totalPrice"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 </LinearLayout>

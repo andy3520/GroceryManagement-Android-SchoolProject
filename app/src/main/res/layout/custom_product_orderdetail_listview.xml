@@ -12,7 +12,7 @@
         android:layout_marginStart="15dp"
         android:gravity="center"
         android:minWidth="200dp"
-        android:text="@string/proName"
+        android:text="@string/header_proName"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <ImageButton
@@ -20,7 +20,8 @@
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
-        app:srcCompat="@drawable/sharp_remove_24" />
+        app:srcCompat="@drawable/sharp_remove_24"
+        android:contentDescription="@string/des_insBtn" />
 
     <TextView
         android:id="@+id/tvProQty"
@@ -29,7 +30,7 @@
         android:layout_marginStart="15dp"
         android:gravity="center"
         android:minWidth="30dp"
-        android:text="@string/saleQty"
+        android:text="@string/header_qty"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <ImageButton
@@ -37,7 +38,8 @@
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
-        app:srcCompat="@drawable/sharp_add_24" />
+        app:srcCompat="@drawable/sharp_add_24"
+        android:contentDescription="@string/des_desBtn" />
 
     <TextView
         android:id="@+id/tvProPrice"
@@ -46,7 +48,7 @@
         android:layout_marginStart="15dp"
         android:gravity="center"
         android:minWidth="125dp"
-        android:text="@string/proPrice"
+        android:text="@string/header_singlePrice"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
@@ -56,7 +58,7 @@
         android:layout_marginStart="15dp"
         android:gravity="center"
         android:minWidth="125dp"
-        android:text="@string/totalPrice"
+        android:text="@string/header_totalQtyPrice"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <ImageButton
@@ -65,5 +67,6 @@
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        app:srcCompat="@drawable/sharp_clear_24" />
+        app:srcCompat="@drawable/sharp_clear_24"
+        android:contentDescription="@string/des_clearBtn" />
 </LinearLayout>

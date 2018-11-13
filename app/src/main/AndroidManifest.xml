@@ -22,7 +22,8 @@
         <activity android:name=".DetailProductContextMenuActivity" />
         <activity android:name=".EditProductContextMenuActivity" />
         <activity android:name=".DetailOrdersContextMenuActivity" />
-        <activity android:name=".EditOrdersContextMenuActivity"></activity>
+        <activity android:name=".EditOrdersContextMenuActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 
 </manifest>

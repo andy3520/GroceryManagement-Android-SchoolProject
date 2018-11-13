@@ -44,7 +44,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
             viewHolder.tvProductName = convertView.findViewById(R.id.tvProductName);
             viewHolder.tvProductQty = convertView.findViewById(R.id.tvProductQty);
             viewHolder.tvProductPrice = convertView.findViewById(R.id.tvProductPrice);
-            viewHolder.tvProductInfor = convertView.findViewById(R.id.tvProductInfor);
+            viewHolder.tvProductInfo = convertView.findViewById(R.id.tvProductInfo);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -52,13 +52,13 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         Product product = products.get(position);
         viewHolder.tvProductId.setText(product.getProductId());
         viewHolder.tvProductName.setText(product.getProductName());
-        viewHolder.tvProductQty.setText(product.getProductQty() + "");
-        viewHolder.tvProductPrice.setText(product.getProductPrice() + "");
-        viewHolder.tvProductInfor.setText(product.getInformation());
+        viewHolder.tvProductQty.setText(String.valueOf(product.getProductQty()));
+        viewHolder.tvProductPrice.setText(String.valueOf((int)product.getProductPrice()));
+        viewHolder.tvProductInfo.setText(product.getInformation());
         return convertView;
     }
 
     private class ViewHolder {
-        TextView tvProductId, tvProductName, tvProductQty, tvProductPrice, tvProductInfor;
+        TextView tvProductId, tvProductName, tvProductQty, tvProductPrice, tvProductInfo;
     }
 }

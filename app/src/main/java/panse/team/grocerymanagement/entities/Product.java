@@ -12,6 +12,7 @@ public class Product implements Serializable {
     private double productPrice;
     private String information;
 
+    // constructor
     public Product(String productId, String productName, int productQty, double productPrice, String information) {
         this.productId = productId;
         this.productName = productName;
@@ -24,6 +25,7 @@ public class Product implements Serializable {
 
     }
 
+    // getter & setter
     public String getProductId() {
         return productId;
     }
@@ -64,11 +66,8 @@ public class Product implements Serializable {
         this.information = information;
     }
 
-    public static String getProductFirstName(String proName) {
-        String[] words = proName.split(" ");
-        return words[words.length - 1];
-    }
 
+    // sort
     public static Comparator<Product> ASC_productId = new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
@@ -88,16 +87,16 @@ public class Product implements Serializable {
     public static Comparator<Product> ASC_productName = new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
-            String proName1 = Normalizer.normalize(Product.getProductFirstName(p1.getProductName().toUpperCase()), Normalizer.Form.NFD);
-            String proName2 = Normalizer.normalize(Product.getProductFirstName(p2.getProductName().toUpperCase()), Normalizer.Form.NFD);
+            String proName1 = Normalizer.normalize(p1.getProductName().toUpperCase(), Normalizer.Form.NFD);
+            String proName2 = Normalizer.normalize(p2.getProductName().toUpperCase(), Normalizer.Form.NFD);
             return proName1.compareTo(proName2);
         }
     };
     public static Comparator<Product> DES_productName = new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
-            String proName1 = Normalizer.normalize(Product.getProductFirstName(p1.getProductName().toUpperCase()), Normalizer.Form.NFD);
-            String proName2 = Normalizer.normalize(Product.getProductFirstName(p2.getProductName().toUpperCase()), Normalizer.Form.NFD);
+            String proName1 = Normalizer.normalize(p1.getProductName().toUpperCase(), Normalizer.Form.NFD);
+            String proName2 = Normalizer.normalize(p2.getProductName().toUpperCase(), Normalizer.Form.NFD);
             return proName2.compareTo(proName1);
         }
     };
@@ -106,7 +105,7 @@ public class Product implements Serializable {
         public int compare(Product p1, Product p2) {
             Integer qty1 = p1.getProductQty();
             Integer qty2 = p2.getProductQty();
-            return qty1.compareTo(qty2);
+            return qty1 - qty2;
         }
     };
     public static Comparator<Product> DES_productQty = new Comparator<Product>() {
@@ -114,7 +113,7 @@ public class Product implements Serializable {
         public int compare(Product p1, Product p2) {
             Integer qty1 = p1.getProductQty();
             Integer qty2 = p2.getProductQty();
-            return qty2.compareTo(qty1);
+            return qty2 - qty1;
         }
     };
     public static Comparator<Product> ASC_productPrice = new Comparator<Product>() {
@@ -135,6 +134,7 @@ public class Product implements Serializable {
         }
     };
 
+    // So sánh sp bằng orderId
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -145,7 +145,6 @@ public class Product implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(productId);
     }
 }

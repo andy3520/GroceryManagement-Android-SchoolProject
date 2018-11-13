@@ -11,36 +11,48 @@ import java.util.ArrayList;
 
 import panse.team.grocerymanagement.entities.Product;
 
-public class DetailProductContextMenuActivity extends AppCompatActivity {
-    private TextView tvMaSP, tvTenSP, tvSLSP, tvGiaSP, tvThongTinSP;
-    private ImageButton btnTroVe;
-    private TextView tvTitle;
+public class DetailProductContextMenuActivity extends AppCompatActivity implements FrameActi{
+    private TextView tvProId, tvProName, tvQty, tvPrice, tvInfo;
+    private ImageButton imgBtnBack;
+
+    @Override
+    public void init() {
+        tvProId = findViewById(R.id.tvProductId);
+        tvProName = findViewById(R.id.tvProductName);
+        tvQty = findViewById(R.id.tvProductQty);
+        tvPrice = findViewById(R.id.tvProductPrice);
+        tvInfo = findViewById(R.id.tvProductInfo);
+        imgBtnBack= findViewById(R.id.imgBtnBack);
+    }
+
+    @Override
+    public void registerEvent() {
+        imgBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void processData() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("detail");
+        Product product = (Product) bundle.getSerializable("product");
+        tvProName.setText(product.getProductName());
+        tvProId.setText(product.getProductId());
+        tvPrice.setText(String.valueOf((int) product.getProductPrice()));
+        tvQty.setText(String.valueOf(product.getProductQty()));
+        tvInfo.setText(product.getInformation());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product_context_menu);
-        tvMaSP = findViewById(R.id.tvMaSP);
-        tvTenSP = findViewById(R.id.tvTenSanPham);
-        tvSLSP = findViewById(R.id.tvSoLuong);
-        tvGiaSP = findViewById(R.id.tvGia);
-        tvThongTinSP = findViewById(R.id.tvThongTin);
-        tvTitle= findViewById(R.id.tvTiTle);
-        btnTroVe = findViewById(R.id.imgTroVe);
-        btnTroVe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("detail");
-        Product product = (Product) bundle.getSerializable("product");
-        tvTitle.setText("Thông tin"+" "+product.getProductName());
-        tvMaSP.setText(product.getProductId());
-        tvTenSP.setText(product.getProductName());
-        tvSLSP.setText(product.getProductQty() + "");
-        tvGiaSP.setText(product.getProductPrice() + "");
-        tvThongTinSP.setText(product.getInformation());
+        init();
+        registerEvent();
+        processData();
     }
 }
