@@ -11,10 +11,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import panse.team.grocerymanagement.entities.Order;
@@ -28,7 +26,7 @@ private ImageButton imgBtnBack, imgBtnSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_orders_context_menu);
+        setContentView(R.layout.activity_edit_orders);
         init();
         registerEvent();
     }

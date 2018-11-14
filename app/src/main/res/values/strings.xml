@@ -22,5 +22,11 @@
     <string name="header_info">Mô tả</string>
     <string name="des_backBtn">Trở về</string>
     <string name="title_detail">Chi tiết</string>
+    <string name="title_createProduct">Tạo sản phẩm</string>
+    <string name="hint_productId">Nhập hoặc scan barcode</string>
+    <string name="hint_productName">Nhập tên sản phẩm</string>
+    <string name="hint_productQty">Nhập số lượng</string>
+    <string name="hint_productPrice">Nhập giá sản phẩm</string>
+    <string name="hint_productInfo">Nhập mô tả</string>
 
 </resources>

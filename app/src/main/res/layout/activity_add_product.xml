@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageButton
+            android:id="@+id/imgBtnBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/des_backBtn"
+            android:scaleType="center"
+            android:src="@drawable/outline_arrow_back_24"
+            tools:ignore="NestedWeights" />
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <ImageButton
+            android:id="@+id/imgBtnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/des_addBtn"
+            android:scaleType="center"
+            android:src="@drawable/outline_save_24" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <fragment
+            android:id="@+id/fragment3"
+            android:name="info.androidhive.barcode.BarcodeReader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            tools:ignore="NestedWeights"
+            tools:layout="@layout/fragment_barcode_reader" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="5">
+
+            <!--<TextView-->
+            <!--android:id="@+id/tvTitle"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:paddingBottom="20dp"-->
+            <!--android:text="@string/title_createProduct"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textSize="36sp" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:gravity="center"
+                    android:text="@string/header_proId"
+                    android:textSize="22sp"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
+
+
+                <EditText
+                    android:id="@+id/edtProdId"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:hint="@string/hint_productId"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:gravity="center"
+                    android:text="@string/header_proName"
+                    android:textSize="22sp"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
+
+
+                <EditText
+                    android:id="@+id/edtProName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:hint="@string/hint_productName"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:gravity="center"
+                    android:text="@string/header_qty"
+                    android:textSize="22sp"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/edtProQty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:hint="@string/hint_productQty"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="7"
+                    android:text="@string/header_singlePrice"
+                    android:textSize="22sp"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/edtProPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:hint="@string/hint_productPrice"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:gravity="center"
+                    android:text="@string/header_info"
+                    android:textSize="22sp"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/edtProInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:hint="@string/hint_productInfo"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

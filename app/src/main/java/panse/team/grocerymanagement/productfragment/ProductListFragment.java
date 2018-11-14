@@ -16,15 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-import panse.team.grocerymanagement.DetailProductContextMenuActivity;
-import panse.team.grocerymanagement.EditProductContextMenuActivity;
+import panse.team.grocerymanagement.DetailProductActivity;
+import panse.team.grocerymanagement.EditProductActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
 
@@ -35,9 +37,11 @@ import panse.team.grocerymanagement.entities.Product;
 public class ProductListFragment extends ListFragment implements View.OnClickListener, FrameFuction {
     private ArrayList<Product> products;
     private ListView list;
+    private ImageButton imgBtnAdd;
     private ProductListAdapter adapter;
     private TextView tvProductIdHeader, tvProductNameHeader, tvProductQtyHeader, tvProductPriceHeader, tvProductInfoHeader;
     private static final int EDIT = 99;
+    private ProductManager productManager;
 
     @Override
     public void init(View view) {
@@ -47,6 +51,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         tvProductQtyHeader = view.findViewById(R.id.tvProductQtyHeader);
         tvProductPriceHeader = view.findViewById(R.id.tvProductPriceHeader);
         tvProductInfoHeader = view.findViewById(R.id.tvProductInfoHeader);
+        imgBtnAdd = view.findViewById(R.id.imgBtnAdd);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         tvProductQtyHeader.setOnClickListener(this);
         tvProductPriceHeader.setOnClickListener(this);
         tvProductInfoHeader.setOnClickListener(this);
+        imgBtnAdd.setOnClickListener(this);
     }
 
     @Override
@@ -70,21 +76,21 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         registerForContextMenu(list);
 
         // SQLite Product manager
-        ProductManager productManager = new ProductManager(getActivity());
+        productManager = new ProductManager(getActivity());
         // Lấy danh sách sản phẩm trong database
         products = productManager.getAllProduct();
 
         // Import data product CHỈ CHẠY 1 LẦN
-//        proMNG.createProduct(new Product("18091000", "Mì hảo hảo", 50, 5000, "Mì hảo hảo tôm chua cay"));
-//        proMNG.createProduct(new Product("18091001", "Bút bi Thiên Long", 600, 5000, "Bút bi Thiên Long BTL1"));
-//        proMNG.createProduct(new Product("18091002", "Nước mắn Nam Ngư", 20, 29000, "Thơm ngon"));
-//        proMNG.createProduct(new Product("18091003", "Coca cola 500ml", 50, 8000, "Nước ngọt coca cola 500ml"));
-//        proMNG.createProduct(new Product("18091004", "Mì Ly Omachi Xúc Xích", 50, 17000, "Mì Omachi có xúc xích 200g "));
-//        proMNG.createProduct(new Product("18091005", "Trứng gà", 30, 5000, "Trứng gà công nghiệp"));
-//        proMNG.createProduct(new Product("18091006", "Sữa đặc Phương Nam", 10, 30000, "Mì hảo hảo tôm chua cay"));
-//        proMNG.createProduct(new Product("18091007", "Bánh bông lan cuộn", 4, 23000, "Bánh bông lan cuộn 200g"));
-//        proMNG.createProduct(new Product("18091008", "Kim chi gói 200g", 10, 30000, "Kim chi đóng gói 200g"));
-//        proMNG.createProduct(new Product("18091009", "Bánh bao trứng cút", 5, 15000, "Bánh bao thịt nhân trứng cút"));
+//        productManager.createProduct(new Product("18091000", "Mì hảo hảo", 50, 5000, "Mì hảo hảo tôm chua cay"));
+//        productManager.createProduct(new Product("18091001", "Bút bi Thiên Long", 600, 5000, "Bút bi Thiên Long BTL1"));
+//        productManager.createProduct(new Product("18091002", "Nước mắn Nam Ngư", 20, 29000, "Thơm ngon"));
+//        productManager.createProduct(new Product("18091003", "Coca cola 500ml", 50, 8000, "Nước ngọt coca cola 500ml"));
+//        productManager.createProduct(new Product("18091004", "Mì Ly Omachi Xúc Xích", 50, 17000, "Mì Omachi có xúc xích 200g "));
+//        productManager.createProduct(new Product("18091005", "Trứng gà", 30, 5000, "Trứng gà công nghiệp"));
+//        productManager.createProduct(new Product("18091006", "Sữa đặc Phương Nam", 10, 30000, "Mì hảo hảo tôm chua cay"));
+//        productManager.createProduct(new Product("18091007", "Bánh bông lan cuộn", 4, 23000, "Bánh bông lan cuộn 200g"));
+//        productManager.createProduct(new Product("18091008", "Kim chi gói 200g", 10, 30000, "Kim chi đóng gói 200g"));
+//        productManager.createProduct(new Product("18091009", "Bánh bao trứng cút", 5, 15000, "Bánh bao thịt nhân trứng cút"));
 
         // Mặc định sort bằng proId ASC
         Collections.sort(products, Product.ASC_productId);
@@ -136,22 +142,27 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
 
             // Xem chi tiết
             case R.id.detail:
-                Intent intent = new Intent(getActivity(), DetailProductContextMenuActivity.class);
+                Intent intent = new Intent(getActivity(), DetailProductActivity.class);
                 Bundle bundle = new Bundle();
                 Product product = products.get(menuInfo.position);
                 bundle.putSerializable("product", product);
                 intent.putExtra("detail", bundle);
-                Objects.requireNonNull(getActivity()).startActivity(intent);
+                startActivity(intent);
                 return true;
 
             // Cập nhật sản phẩm
             case R.id.edit:
-                Intent intent1 = new Intent(getActivity(), EditProductContextMenuActivity.class);
+                Intent intent1 = new Intent(getActivity(), EditProductActivity.class);
                 Bundle bundle1 = new Bundle();
                 Product product1 = products.get(menuInfo.position);
-                bundle1.putSerializable("product1", product1);
+                bundle1.putInt("pos",menuInfo.position);
+                bundle1.putSerializable("product", product1);
                 intent1.putExtra("edit", bundle1);
-                Objects.requireNonNull(getActivity()).startActivityForResult(intent1, EDIT);
+                startActivityForResult(intent1, EDIT);
+                return true;
+
+            case R.id.add:
+
                 return true;
         }
 
@@ -165,14 +176,17 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         if (requestCode == EDIT) {
             if (resultCode == Activity.RESULT_OK) {
                 Bundle bundle = data.getBundleExtra("edit");
-                int pos = bundle.getInt("pos");
-                Product product = (Product) bundle.getSerializable("product1");
-                Product needEdit = products.get(pos);
-                needEdit.setProductName(product.getProductName());
-                needEdit.setProductQty(product.getProductQty());
-                needEdit.setProductPrice(product.getProductPrice());
-                needEdit.setInformation(product.getInformation());
-                adapter.notifyDataSetChanged();
+                Product product = (Product) bundle.getSerializable("product");
+                if (productManager.updateProduct(product.getProductId(), product) > 0) {
+                    Product productUI = products.get(bundle.getInt("pos"));
+                    productUI.setProductName(product.getProductName());
+                    productUI.setProductPrice(product.getProductPrice());
+                    productUI.setProductQty(product.getProductQty());
+                    productUI.setInformation(product.getInformation());
+                    adapter.notifyDataSetChanged();
+                }
+            }else{
+                Toast.makeText(getActivity(), "Hủy update sản phẩm", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -180,7 +194,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     // Click item list để xem chi tiết
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(getActivity(), DetailProductContextMenuActivity.class);
+        Intent intent = new Intent(getActivity(), DetailProductActivity.class);
         Bundle bundle = new Bundle();
         Product product = products.get(position);
         bundle.putSerializable("product", product);
@@ -205,7 +219,17 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
             case R.id.tvProductPriceHeader:
                 sortProductPrice();
                 break;
+
+            // Tạo product
+            case R.id.imgBtnAdd:
+
+                break;
         }
+    }
+
+    private void callCreateActi() {
+        Intent intent = new Intent();
+
     }
 
     // biến quản lý sort

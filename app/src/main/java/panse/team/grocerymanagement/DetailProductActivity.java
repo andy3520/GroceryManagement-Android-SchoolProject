@@ -7,11 +7,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import panse.team.grocerymanagement.entities.Product;
 
-public class DetailProductContextMenuActivity extends AppCompatActivity implements FrameActi{
+public class DetailProductActivity extends AppCompatActivity implements FrameActi{
     private TextView tvProId, tvProName, tvQty, tvPrice, tvInfo;
     private ImageButton imgBtnBack;
 
@@ -50,7 +48,7 @@ public class DetailProductContextMenuActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_product_context_menu);
+        setContentView(R.layout.activity_detail_product);
         init();
         registerEvent();
         processData();

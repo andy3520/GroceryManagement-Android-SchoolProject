@@ -19,8 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailProductContextMenuActivity" />
-        <activity android:name=".EditProductContextMenuActivity" />
+        <activity android:name=".DetailProductActivity" />
+        <activity android:name=".EditProductActivity" />
         <activity android:name=".DetailOrdersContextMenuActivity" />
         <activity android:name=".EditOrdersContextMenuActivity"
             android:windowSoftInputMode="adjustNothing"></activity>
