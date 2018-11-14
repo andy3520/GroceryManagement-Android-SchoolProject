@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".AddProductActivity"
     android:orientation="vertical"
     android:weightSum="10">
 
@@ -53,10 +54,10 @@
         android:weightSum="10">
 
         <fragment
-            android:id="@+id/fragment3"
+            android:id="@+id/fragmentScan"
             android:name="info.androidhive.barcode.BarcodeReader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             tools:ignore="NestedWeights"
             tools:layout="@layout/fragment_barcode_reader" />
@@ -232,7 +233,7 @@
                     android:layout_weight="3"
                     android:ems="10"
                     android:hint="@string/hint_productInfo"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textAlignment="center"
                     android:textSize="22sp" />
 

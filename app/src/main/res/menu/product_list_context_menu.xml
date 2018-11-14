@@ -5,11 +5,11 @@
         android:title="Xem chi tiết" />
     <item
         android:id="@+id/edit"
-        android:title="Chỉnh sửa hóa đơn" />
+        android:title="Chỉnh sửa sản phẩm" />
     <item
         android:id="@+id/delete"
-        android:title="Xóa hóa đơn" />
+        android:title="Xóa sản phẩm" />
     <item
         android:id="@+id/add"
-        android:title="Tạo hóa đơn" />
+        android:title="Tạo sản phẩm" />
 </menu>

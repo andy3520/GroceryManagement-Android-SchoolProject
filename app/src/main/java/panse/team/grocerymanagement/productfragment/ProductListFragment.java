@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
+import panse.team.grocerymanagement.AddProductActivity;
 import panse.team.grocerymanagement.DetailProductActivity;
 import panse.team.grocerymanagement.EditProductActivity;
 import panse.team.grocerymanagement.FrameFuction;
@@ -41,6 +42,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     private ProductListAdapter adapter;
     private TextView tvProductIdHeader, tvProductNameHeader, tvProductQtyHeader, tvProductPriceHeader, tvProductInfoHeader;
     private static final int EDIT = 99;
+    private static final int ADD = 88;
     private ProductManager productManager;
 
     @Override
@@ -128,13 +130,21 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
             case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
                 builder.setTitle("Xóa sản phẩm");
-                builder.setMessage("Bạn có muốn xóa sản phẩm ?");
-                builder.setNegativeButton("Không", null);
+                builder.setMessage("Bạn có muốn xóa sản phẩm?");
+                builder.setNegativeButton("Hủy", null);
                 builder.setPositiveButton("Có", new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        products.remove(menuInfo.position);
-                        adapter.notifyDataSetChanged();
+                        if (productManager.deleteProductById(products.get(menuInfo.position).getProductId()) > 0) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    products.remove(menuInfo.position);
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 });
                 builder.show();
@@ -155,14 +165,15 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                 Intent intent1 = new Intent(getActivity(), EditProductActivity.class);
                 Bundle bundle1 = new Bundle();
                 Product product1 = products.get(menuInfo.position);
-                bundle1.putInt("pos",menuInfo.position);
+                bundle1.putInt("pos", menuInfo.position);
                 bundle1.putSerializable("product", product1);
                 intent1.putExtra("edit", bundle1);
                 startActivityForResult(intent1, EDIT);
                 return true;
 
+            // Tạo sản phẩm
             case R.id.add:
-
+                callCreateActi();
                 return true;
         }
 
@@ -184,9 +195,26 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                     productUI.setProductQty(product.getProductQty());
                     productUI.setInformation(product.getInformation());
                     adapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Update thành công", Toast.LENGTH_SHORT).show();
                 }
-            }else{
+            } else {
                 Toast.makeText(getActivity(), "Hủy update sản phẩm", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == ADD) {
+            if (resultCode == Activity.RESULT_OK) {
+                Bundle bundle = data.getBundleExtra("add");
+                Product product = (Product) bundle.getSerializable("product");
+                if (productManager.createProduct(product) > 0) {
+                    products.add(product);
+                    adapter.notifyDataSetChanged();
+                    getListView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            getListView().setSelection(adapter.getCount() - 1);
+                        }
+                    });
+                    Toast.makeText(getActivity(), "Update thành công", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -222,14 +250,15 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
 
             // Tạo product
             case R.id.imgBtnAdd:
-
+                callCreateActi();
                 break;
         }
     }
 
+    // Tạo sản phẩm
     private void callCreateActi() {
-        Intent intent = new Intent();
-
+        Intent intent = new Intent(getActivity(), AddProductActivity.class);
+        startActivityForResult(intent, ADD);
     }
 
     // biến quản lý sort

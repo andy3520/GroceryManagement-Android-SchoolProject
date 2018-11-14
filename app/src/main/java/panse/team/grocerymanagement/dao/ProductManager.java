@@ -66,22 +66,25 @@ public class ProductManager {
     }
 
     public Product getProductByID(String proID) {
-
-        String selectQuery = "SELECT * FROM " + TABLE_Product + " WHERE proID = '"+proID+"'";
+        Product prod = null;
+        String selectQuery = "SELECT * FROM " + TABLE_Product + " WHERE proID = '" + proID + "'";
         db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,null);
-        if (cursor != null)
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (!(cursor.moveToFirst()) || cursor.getCount() == 0) {
+            return null;
+        } else {
             cursor.moveToFirst();
-        Product prod = new Product(cursor.getString(0), cursor.getString(1), cursor.getInt(3), cursor.getDouble(2), cursor.getString(4));
+            prod = new Product(cursor.getString(0), cursor.getString(1), cursor.getInt(3), cursor.getDouble(2), cursor.getString(4));
+        }
         cursor.close();
         return prod;
     }
 
     public Product getProductByName(String proN) {
 
-        String selectQuery = "SELECT * FROM " + TABLE_Product + " WHERE proName = '"+proN+"'";
+        String selectQuery = "SELECT * FROM " + TABLE_Product + " WHERE proName = '" + proN + "'";
         db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null)
             cursor.moveToFirst();
         Product prod = new Product(cursor.getString(0), cursor.getString(1), cursor.getInt(3), cursor.getDouble(2), cursor.getString(4));
@@ -104,16 +107,16 @@ public class ProductManager {
         return n;
     }
 
-    public long deleteProductById(String  proId){
+    public long deleteProductById(String proId) {
         long n;
         db = helper.getWritableDatabase();
-        n = db.delete(TABLE_Product,PROID+"=?",new String[] {String.valueOf(proId)});
+        n = db.delete(TABLE_Product, PROID + "=?", new String[]{String.valueOf(proId)});
         return n;
     }
 
-    public ArrayList<Product> alarmProduct(int soluong){
+    public ArrayList<Product> alarmProduct(int soluong) {
         ArrayList<Product> lstPro = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_Product + " Where qTy < '"+soluong+"' ";
+        String selectQuery = "SELECT * FROM " + TABLE_Product + " Where qTy < '" + soluong + "' ";
 
         db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -135,7 +138,7 @@ public class ProductManager {
     }
 
     // trả về List Product chỉ có 4 gtrị = "ID","NAME","QtySale","TotalSale"
-    public ArrayList<Product> sortProductBySale(){
+    public ArrayList<Product> sortProductBySale() {
         ArrayList<Product> lstPro = new ArrayList<>();
         // SELECT c.c3, p.c2, SUM(c.c4), SUM(c.c5) FROM 'pro' p join 'ct' c on p.c1 = c.c3 group by c.c3, p.c2 order by c.c5;
         String selectQuery = "SELECT dt.proID, p.proName,SUM(dt.qTy), SUM(dt.totalProduct) FROM dbOrderDetail dt join dbProduct p on dt.proID = p.proID group by dt.proID, p.proName order by dt.totalProduct";
