@@ -31,6 +31,7 @@ import panse.team.grocerymanagement.EditProductActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
 
+import panse.team.grocerymanagement.dao.OrderDetailManager;
 import panse.team.grocerymanagement.dao.ProductManager;
 import panse.team.grocerymanagement.entities.Product;
 
@@ -44,6 +45,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
     private static final int EDIT = 99;
     private static final int ADD = 88;
     private ProductManager productManager;
+    private OrderDetailManager orderDetailManager;
 
     @Override
     public void init(View view) {
@@ -79,20 +81,9 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
 
         // SQLite Product manager
         productManager = new ProductManager(getActivity());
+        orderDetailManager = new OrderDetailManager(getActivity());
         // Lấy danh sách sản phẩm trong database
         products = productManager.getAllProduct();
-
-        // Import data product CHỈ CHẠY 1 LẦN
-//        productManager.createProduct(new Product("18091000", "Mì hảo hảo", 50, 5000, "Mì hảo hảo tôm chua cay"));
-//        productManager.createProduct(new Product("18091001", "Bút bi Thiên Long", 600, 5000, "Bút bi Thiên Long BTL1"));
-//        productManager.createProduct(new Product("18091002", "Nước mắn Nam Ngư", 20, 29000, "Thơm ngon"));
-//        productManager.createProduct(new Product("18091003", "Coca cola 500ml", 50, 8000, "Nước ngọt coca cola 500ml"));
-//        productManager.createProduct(new Product("18091004", "Mì Ly Omachi Xúc Xích", 50, 17000, "Mì Omachi có xúc xích 200g "));
-//        productManager.createProduct(new Product("18091005", "Trứng gà", 30, 5000, "Trứng gà công nghiệp"));
-//        productManager.createProduct(new Product("18091006", "Sữa đặc Phương Nam", 10, 30000, "Mì hảo hảo tôm chua cay"));
-//        productManager.createProduct(new Product("18091007", "Bánh bông lan cuộn", 4, 23000, "Bánh bông lan cuộn 200g"));
-//        productManager.createProduct(new Product("18091008", "Kim chi gói 200g", 10, 30000, "Kim chi đóng gói 200g"));
-//        productManager.createProduct(new Product("18091009", "Bánh bao trứng cút", 5, 15000, "Bánh bao thịt nhân trứng cút"));
 
         // Mặc định sort bằng proId ASC
         Collections.sort(products, Product.ASC_productId);
@@ -130,20 +121,26 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
             case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
                 builder.setTitle("Xóa sản phẩm");
-                builder.setMessage("Bạn có muốn xóa sản phẩm?");
+                builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn có muốn xóa sản phẩm?");
                 builder.setNegativeButton("Hủy", null);
                 builder.setPositiveButton("Có", new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (productManager.deleteProductById(products.get(menuInfo.position).getProductId()) > 0) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    products.remove(menuInfo.position);
-                                    adapter.notifyDataSetChanged();
-                                    Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                        if (orderDetailManager.getAllOrderDetailByproID(products.get(menuInfo.position).getProductId()).size() <= 0) {
+                            if (productManager.deleteProductById(products.get(menuInfo.position).getProductId()) > 0) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        products.remove(menuInfo.position);
+                                        adapter.notifyDataSetChanged();
+                                        Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(getActivity(), "Xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                            } 
+                        }else{
+                            Toast.makeText(getActivity(), "Sản phẩm tồn tại trong hóa đơn không thể xóa. Vui lòng xóa hóa đơn trước", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -195,10 +192,10 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                     productUI.setProductQty(product.getProductQty());
                     productUI.setInformation(product.getInformation());
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "Update thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity(), "Hủy update sản phẩm", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Hủy chỉnh sửa sản phẩm", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == ADD) {
             if (resultCode == Activity.RESULT_OK) {
@@ -213,8 +210,10 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
                             getListView().setSelection(adapter.getCount() - 1);
                         }
                     });
-                    Toast.makeText(getActivity(), "Update thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Tạo thành công", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getActivity(), "Hủy tạo", Toast.LENGTH_SHORT).show();
             }
         }
     }

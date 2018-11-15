@@ -22,7 +22,7 @@ public class MySQLHelper extends SQLiteOpenHelper {
             "ordID varchar(50) primary key," +
             "userName nvarchar(100)," +
             "totalPrice double," +
-            "dateOrd date)";
+            "dateOrd varchar(50))";
 
     public static final String createTBOrderDetail = "Create table dbOrderDetail(" +
             "ordDetailID varchar(50) primary key," +
@@ -30,7 +30,7 @@ public class MySQLHelper extends SQLiteOpenHelper {
             "proID varchar(50) ," +
             "qTy int ," +
             "totalProduct double," +
-            "dateOrd date," +
+            "dateOrd varchar(50)," +
             "constraint fk_ordID foreign key (ordID) references dbOrder(ordID) ON DELETE CASCADE," +
             "constraint fk_proID foreign key (proID) references dbProduct(proID) )";
 
@@ -54,4 +54,9 @@ public class MySQLHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade: ");
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
+    }
 }

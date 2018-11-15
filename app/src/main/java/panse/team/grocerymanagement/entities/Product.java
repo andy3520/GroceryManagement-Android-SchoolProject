@@ -11,7 +11,7 @@ public class Product implements Serializable {
     private int productQty;
     private double productPrice;
     private String information;
-
+    private static final long serialVersionUID = 1L;
     // constructor
     public Product(String productId, String productName, int productQty, double productPrice, String information) {
         this.productId = productId;

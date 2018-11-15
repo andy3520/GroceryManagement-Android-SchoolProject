@@ -8,61 +8,51 @@
 
     <TextView
         android:id="@+id/tvProductId"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:maxWidth="150dp"
-        android:minWidth="100dp"
         android:text="@string/header_proId"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tvProductName"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:maxWidth="300dp"
-        android:minWidth="200dp"
         android:text="@string/header_proName"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tvProductQty"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:maxWidth="200dp"
-        android:minWidth="100dp"
         android:text="@string/header_qty"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tvProductPrice"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:gravity="center"
-        android:minWidth="100dp"
-        android:maxWidth="200dp"
         android:text="@string/header_singlePrice"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tvProductInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="25dp"
         android:gravity="center"
-        android:minWidth="200dp"
-        android:maxWidth="300dp"
         android:text="@string/header_info"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />

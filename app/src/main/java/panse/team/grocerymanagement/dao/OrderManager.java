@@ -9,8 +9,11 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import panse.team.grocerymanagement.entities.Order;
 import panse.team.grocerymanagement.entities.OrderDetails;
@@ -44,7 +47,7 @@ public class OrderManager {
         if (n > 0) {
             for (int i = 0; i < lstpro.size(); i++) {
                 Log.d("dbs", "ODT " + i + " - Size" + lstpro.size());
-                m = OrderDetailManager.createOrderDetail(new OrderDetails(getIDAdd("ODT") + i, maOrder, lstpro.get(i).getProductId(), lstpro.get(i).getProductQty(), lstpro.get(i).getProductPrice() * lstpro.get(i).getProductQty(), new Date()));
+                m = OrderDetailManager.createOrderDetail(new OrderDetails(getIDAdd("ODT") + i, maOrder, lstpro.get(i).getProductId(), lstpro.get(i).getProductQty(), lstpro.get(i).getProductPrice() * lstpro.get(i).getProductQty(), getNgayHienTai()));
             }
         }
         db.close();
@@ -63,9 +66,8 @@ public class OrderManager {
                 o.setOrderId(cursor.getString(0));
                 o.setCustomerName(cursor.getString(1));
                 o.setTotalOrderPrice(cursor.getDouble(2));
-                o.setOrderDate(parseDate(cursor.getString(3)));
+                o.setOrderDate(cursor.getString(3));
                 listOrder.add(o);
-
             } while (cursor.moveToNext());
         }
         db.close();
@@ -83,7 +85,7 @@ public class OrderManager {
                 o.setOrderId(cursor.getString(0));
                 o.setCustomerName(cursor.getString(1));
                 o.setTotalOrderPrice(cursor.getDouble(2));
-                o.setOrderDate(parseDate(cursor.getString(3)));
+                o.setOrderDate(cursor.getString(3));
                 listOrder.add(o);
 
             } while (cursor.moveToNext());
@@ -103,7 +105,7 @@ public class OrderManager {
         if (cursor != null){
             cursor.moveToFirst();
         }
-        Order o = new Order(cursor.getString(0), cursor.getString(1), parseDate(cursor.getString(3)), cursor.getDouble(2));
+        Order o = new Order(cursor.getString(0), cursor.getString(1), cursor.getString(3), cursor.getDouble(2));
         cursor.close();
         db.close();
         return o;
@@ -124,7 +126,7 @@ public class OrderManager {
     public long deleteOrderById(String ordId) {
         long n;
         db = helper.getWritableDatabase();
-        n = db.delete(TABLE_Order, ORDID + "=?", new String[]{String.valueOf(ordId)});
+        n = db.delete(TABLE_Order, ORDID + "=?", new String[]{ordId});
         return n;
     }
 
@@ -164,7 +166,7 @@ public class OrderManager {
     public Date parseDate(String Sdate) {
         Date date = null;
         try {
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
             date = df.parse(Sdate);
         } catch (ParseException e) {
             e.printStackTrace();

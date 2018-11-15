@@ -21,17 +21,16 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
-import panse.team.grocerymanagement.DetailOrdersContextMenuActivity;
-import panse.team.grocerymanagement.EditOrdersContextMenuActivity;
+import panse.team.grocerymanagement.DetailOrdersActivity;
+import panse.team.grocerymanagement.EditOrdersActivity;
 import panse.team.grocerymanagement.FrameFuction;
 import panse.team.grocerymanagement.R;
+import panse.team.grocerymanagement.customadapteractivity.EditOrderAdapter;
 import panse.team.grocerymanagement.dao.OrderDetailManager;
 import panse.team.grocerymanagement.dao.OrderManager;
 import panse.team.grocerymanagement.dao.ProductManager;
@@ -48,6 +47,8 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
     private ListView list;
     private OrderListAdapter adapter;
     private static final int EDIT = 2;
+    private OrderManager orderManager;
+    private OrderDetailManager orderDetailManager;
 
     // Khởi tạo các đối tượng theo id
     @Override
@@ -82,15 +83,11 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         registerForContextMenu(list);
 
         // Sqlite manager
-        ProductManager proMNG;
-        OrderManager ordMNG;
-        OrderDetailManager ordDtMNG;
-        ordMNG = new OrderManager(getActivity());
-        proMNG = new ProductManager(getActivity());
-        ordDtMNG = new OrderDetailManager(getActivity());
+        orderManager = new OrderManager(getActivity());
+        orderDetailManager = new OrderDetailManager(getActivity());
 
         // Lấy danh sách order từ CSDL
-        orders = ordMNG.getAllOrder();
+        orders = orderManager.getAllOrder();
 
         // Fake data để test
 //        orders = new ArrayList<>();
@@ -130,11 +127,20 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
             Order order = orders.get(info.position);
 
             //setTitle cho menu
-            menu.setHeaderTitle(order.getOrderId() + " " + order.getCustomerName());
+            menu.setHeaderTitle(order.getOrderId() + "\n" + order.getCustomerName());
             inflater.inflate(R.menu.order_list_context_menu, menu);
         }
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(getActivity(), DetailOrdersActivity.class);
+        Bundle bundle = new Bundle();
+        Order order = orders.get(position);
+        bundle.putSerializable("order", order);
+        intent.putExtra("detail", bundle);
+        getActivity().startActivity(intent);
+    }
 
     // Sự kiện cho các item trong context menu
     @Override
@@ -151,8 +157,18 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        orders.remove(menuInfo.position);
-                        adapter.notifyDataSetChanged();
+                        Order order = orders.get(menuInfo.position);
+                        if (orderManager.deleteOrderById(order.getOrderId()) > 0) {
+//                                if (orderDetailManager.deletManyOrderDetailByOrdId(order.getOrderId()) > 0) {
+                            Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            orders.remove(menuInfo.position);
+                            adapter.notifyDataSetChanged();
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+//                                }
+                        } else {
+                            Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 builder.show();
@@ -160,7 +176,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
 
             // Gọi acti chi tiết
             case R.id.detail:
-                Intent intent = new Intent(getActivity(), DetailOrdersContextMenuActivity.class);
+                Intent intent = new Intent(getActivity(), DetailOrdersActivity.class);
                 Bundle bundle = new Bundle();
                 Order order = orders.get(menuInfo.position);
                 bundle.putSerializable("order", order);
@@ -170,12 +186,13 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
 
             // Gọi acti chỉnh sửa
             case R.id.edit:
-                Intent intent1 = new Intent(getActivity(), EditOrdersContextMenuActivity.class);
+                Intent intent1 = new Intent(getActivity(), EditOrdersActivity.class);
                 Bundle bundle1 = new Bundle();
                 Order order1 = orders.get(menuInfo.position);
-                bundle1.putSerializable("order1", order1);
+                bundle1.putSerializable("pos",menuInfo.position);
+                bundle1.putSerializable("order", order1);
                 intent1.putExtra("edit", bundle1);
-                getActivity().startActivityForResult(intent1, EDIT);
+                startActivityForResult(intent1, EDIT);
                 return true;
 
             // Chuyển sang tab bán hàng để tạo hóa đơn
@@ -195,15 +212,44 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         if (requestCode == EDIT) {
             if (resultCode == Activity.RESULT_OK) {
                 Bundle bundle = data.getBundleExtra("edit");
+                Order order = (Order) bundle.getSerializable("order");
                 int pos = bundle.getInt("pos");
-                Order order = (Order) bundle.getSerializable("order1");
-                Order needEdit = orders.get(pos);
-                needEdit.setOrderId(order.getOrderId());
-                needEdit.setCustomerName(order.getCustomerName());
-                needEdit.setOrderDate(order.getOrderDateFull());
-                needEdit.setTotalOrderPrice(order.getTotalOrderPrice());
+                Order orderNeedEdit = orders.get(pos);
+                orderNeedEdit.setCustomerName(order.getCustomerName());
+                orderNeedEdit.setOrderDate(order.getOrderDate());
+                orderNeedEdit.setTotalOrderPrice(order.getTotalOrderPrice());
+                ArrayList<Product> editList = EditOrdersActivity.editDetail;
+                ArrayList<Product> deleteList = EditOrdersActivity.deleteDetail;
+                if (deleteList.size() > 0) {
+                    for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                        for (Product p : deleteList) {
+                            if (odt.getProductId().equals(p.getProductId())) {
+                                orderDetailManager.deletOneOrderDetail(odt.getOrderDetailId());
+                            }
+                        }
+                    }
+                    deleteList.clear();
+                }
+                if (editList.size() > 0) {
+                    for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                        for (Product p : editList) {
+                            if (odt.getProductId().equals(p.getProductId())) {
+                                odt.setOrderDetailQty(p.getProductQty());
+                                if (orderDetailManager.updateOrderDetail(odt.getOrderDetailId(), odt)>0) {
+                                }
+                            }
+                        }
+                    }
+                    editList.clear();
+                }
+                Toast.makeText(getActivity(), "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
+                orderManager.updateOrder(order.getOrderId(), order);
                 adapter.notifyDataSetChanged();
             }
+        } else {
+            Toast.makeText(getActivity(), "Hủy chỉnh sửa", Toast.LENGTH_SHORT).show();
+            EditOrdersActivity.editDetail.clear();
+            EditOrdersActivity.deleteDetail.clear();
         }
     }
 
@@ -232,7 +278,6 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
                 navigation.setSelectedItemId(R.id.nav_banhang);
                 break;
-            // ^^^
 
         }
     }

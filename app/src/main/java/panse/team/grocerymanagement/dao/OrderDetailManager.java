@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import panse.team.grocerymanagement.entities.OrderDetails;
 
@@ -39,7 +40,7 @@ public class OrderDetailManager {
         values.put(PROID, od.getProductId());
         values.put(QTY, od.getOrderDetailQty());
         values.put(TOTALPRODUCT, od.getOrderDetailPrice());
-        values.put(DATEORD, String.valueOf(od.getOrderDetailDate()));
+        values.put(DATEORD,od.getOrderDetailDateString());
 
         n = db.insert(TABLE_OrderDetail, null, values);
         db.close();
@@ -60,14 +61,7 @@ public class OrderDetailManager {
                 od.setProductId(cursor.getString(2));
                 od.setOrderDetailQty(cursor.getInt(3));
                 od.setOrderDetailPrice(cursor.getDouble(4));
-                try {
-                    String Sdate = cursor.getString(5);
-                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                    Date date = df.parse(Sdate);
-                    od.setOrderDetailDate(date);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                od.setOrderDetailDate(cursor.getString(5));
                 listOrderDetail.add(od);
 
             } while (cursor.moveToNext());
@@ -84,7 +78,7 @@ public class OrderDetailManager {
         Cursor cursor = db.rawQuery(query,null);
         if(cursor.moveToFirst()) {
             do {
-                OrderDetails o = new OrderDetails(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getDouble(4), parseDate(cursor.getString(5)));
+                OrderDetails o = new OrderDetails(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getDouble(4), cursor.getString(5));
                 listOrderDetail.add(o);
             } while (cursor.moveToNext());
         }
@@ -93,6 +87,23 @@ public class OrderDetailManager {
         return listOrderDetail;
     }
 
+    //get all detial by proid
+    public ArrayList<OrderDetails> getAllOrderDetailByproID(String proID){
+        ArrayList<OrderDetails> listOrderDetail = new ArrayList<>();
+
+        String query = "select * from dbOrderDetail where proID = '"+proID+"'";
+        db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()) {
+            do {
+                OrderDetails o = new OrderDetails(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getDouble(4), cursor.getString(5));
+                listOrderDetail.add(o);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return listOrderDetail;
+    }
 
     public long updateOrderDetail(String ordDtId, OrderDetails newOrdDt) {
         db = helper.getWritableDatabase();
@@ -100,7 +111,7 @@ public class OrderDetailManager {
         contentValues.put(QTY, newOrdDt.getOrderDetailQty());
         contentValues.put(TOTALPRODUCT, newOrdDt.getOrderDetailPrice());
         contentValues.put(DATEORD, newOrdDt.getOrderDetailDateString());
-        return db.update(TABLE_OrderDetail, contentValues, ORDDETAILID + "=?", new String[]{String.valueOf(ordDtId)});
+        return db.update(TABLE_OrderDetail, contentValues, ORDDETAILID + "=?", new String[]{ordDtId});
     }
 
     public long deletManyOrderDetail(ArrayList<OrderDetails> lstOrdDt) {
@@ -129,7 +140,7 @@ public class OrderDetailManager {
     public Date parseDate(String Sdate) {
         Date date = null;
         try {
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
             date = df.parse(Sdate);
         } catch (ParseException e) {
             e.printStackTrace();

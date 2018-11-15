@@ -16,12 +16,14 @@ import com.google.android.gms.vision.barcode.Barcode;
 import java.util.List;
 
 import info.androidhive.barcode.BarcodeReader;
+import panse.team.grocerymanagement.dao.ProductManager;
 import panse.team.grocerymanagement.entities.Product;
 
 public class AddProductActivity extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener, FrameActi {
     private EditText edtProId, edtProName, edtProQty, edtProPrice, edtProInfo;
     private ImageButton imgBtnAdd, imgBtnBack;
     private BarcodeReader barcodeReader;
+    private ProductManager productManager;
 
     @Override
     public void init() {
@@ -34,6 +36,7 @@ public class AddProductActivity extends AppCompatActivity implements BarcodeRead
         imgBtnBack = findViewById(R.id.imgBtnBack);
         barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.fragmentScan);
         barcodeReader.setBeepSoundFile("quack.mp3");
+        productManager = new ProductManager(this);
     }
 
     @Override
@@ -60,6 +63,8 @@ public class AddProductActivity extends AppCompatActivity implements BarcodeRead
                 } else if (edtProPrice.getText().toString().equals("")) {
                     Toast.makeText(AddProductActivity.this, "Vui lòng nhập giá sản phẩm", Toast.LENGTH_SHORT).show();
                     hideKeyboard(AddProductActivity.this);
+                } else if (productManager.getProductByID(edtProId.getText().toString()) != null) {
+                    Toast.makeText(AddProductActivity.this, "\tTrùng mã sản phẩm\nSản phẩm này đã có trong cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
                 } else {
                     Product product = new Product();
                     product.setProductId(edtProId.getText().toString());

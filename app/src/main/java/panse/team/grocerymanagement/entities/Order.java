@@ -3,6 +3,7 @@ package panse.team.grocerymanagement.entities;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
@@ -12,10 +13,11 @@ public class Order implements Serializable {
     private String orderId;
     private double totalOrderPrice;
     private String customerName;
-    private Date orderDate;
+    private String orderDate;
+    private DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 
     // constructor
-    public Order(String orderId, String customerName, Date orderDate, double totalOrderPrice) {
+    public Order(String orderId, String customerName, String orderDate, double totalOrderPrice) {
         this.orderId = orderId;
         this.totalOrderPrice = totalOrderPrice;
         this.customerName = customerName;
@@ -53,14 +55,14 @@ public class Order implements Serializable {
     }
 
     public String getOrderDate() {
-        return DateFormat.getDateInstance().format(orderDate);
-    }
-
-    public Date getOrderDateFull() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public String getOrderDateFull() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -111,8 +113,8 @@ public class Order implements Serializable {
     public static Comparator<Order> ASC_orderDateComparator = new Comparator<Order>() {
         @Override
         public int compare(Order o1, Order o2) {
-            Date date1 = o1.getOrderDateFull();
-            Date date2 = o2.getOrderDateFull();
+            String date1 = o1.getOrderDateFull();
+            String date2 = o2.getOrderDateFull();
             return date1.compareTo(date2);
         }
     };
@@ -120,8 +122,8 @@ public class Order implements Serializable {
     public static Comparator<Order> DES_orderDateComparator = new Comparator<Order>() {
         @Override
         public int compare(Order o1, Order o2) {
-            Date date1 = o1.getOrderDateFull();
-            Date date2 = o2.getOrderDateFull();
+            String date1 = o1.getOrderDateFull();
+            String date2 = o2.getOrderDateFull();
             return date2.compareTo(date1);
         }
     };

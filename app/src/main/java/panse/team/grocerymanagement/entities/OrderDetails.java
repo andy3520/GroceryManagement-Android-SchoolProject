@@ -2,7 +2,6 @@ package panse.team.grocerymanagement.entities;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.text.Normalizer;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
@@ -13,10 +12,10 @@ public class OrderDetails implements Serializable {
     private String productId;
     private int orderDetailQty;
     private double orderDetailPrice;
-    private Date orderDetailDate;
+    private String orderDetailDate;
 
     // constructor
-    public OrderDetails(String orderDetailId, String orderId, String productId, int orderDetailQty, double orderDetailPrice, Date orderDetailDate) {
+    public OrderDetails(String orderDetailId, String orderId, String productId, int orderDetailQty, double orderDetailPrice, String orderDetailDate) {
         this.orderDetailId = orderDetailId;
         this.orderId = orderId;
         this.productId = productId;
@@ -66,18 +65,18 @@ public class OrderDetails implements Serializable {
     }
 
     public String getOrderDetailDateString() {
-        return DateFormat.getDateInstance().format(orderDetailDate);
+        return orderDetailDate;
     }
 
     public void setOrderDetailPrice(double orderDetailPrice) {
         this.orderDetailPrice = orderDetailPrice;
     }
 
-    public Date getOrderDetailDate() {
+    public String getOrderDetailDate() {
         return orderDetailDate;
     }
 
-    public void setOrderDetailDate(Date orderDetailDate) {
+    public void setOrderDetailDate(String orderDetailDate) {
         this.orderDetailDate = orderDetailDate;
     }
 
@@ -139,8 +138,8 @@ public class OrderDetails implements Serializable {
     public static Comparator<OrderDetails> ASC_orderDetailDateComparator = new Comparator<OrderDetails>() {
         @Override
         public int compare(OrderDetails o1, OrderDetails o2) {
-            Date date1 = o1.getOrderDetailDate();
-            Date date2 = o2.getOrderDetailDate();
+            String date1 = o1.getOrderDetailDate();
+            String date2 = o2.getOrderDetailDate();
             return date1.compareTo(date2);
         }
     };
@@ -148,8 +147,8 @@ public class OrderDetails implements Serializable {
     public static Comparator<OrderDetails> DES_orderDetailDateComparator = new Comparator<OrderDetails>() {
         @Override
         public int compare(OrderDetails o1, OrderDetails o2) {
-            Date date1 = o1.getOrderDetailDate();
-            Date date2 = o2.getOrderDetailDate();
+            String date1 = o1.getOrderDetailDate();
+            String date2 = o2.getOrderDetailDate();
             return date2.compareTo(date1);
         }
     };

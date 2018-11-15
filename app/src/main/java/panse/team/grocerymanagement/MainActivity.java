@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import panse.team.grocerymanagement.dao.ProductManager;
+import panse.team.grocerymanagement.entities.Product;
 import panse.team.grocerymanagement.orderfragment.OrderListFragment;
 import panse.team.grocerymanagement.productfragment.ProductListFragment;
 import panse.team.grocerymanagement.salefragment.SaleFragment;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private BottomNavigationView navigation;
-
+    private ProductManager productManager;
 
     // Sự kiện thanh điều hướng bên dưới
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -51,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
     // Khởi tạo các view
     private void init() {
         navigation = findViewById(R.id.navigation);
+        productManager = new ProductManager(this);
+//        productManager.createProduct(new Product("18091000", "Mì hảo hảo", 50, 5000, "Mì hảo hảo tôm chua cay"));
+//        productManager.createProduct(new Product("18091001", "Bút bi Thiên Long", 600, 5000, "Bút bi Thiên Long BTL1"));
+//        productManager.createProduct(new Product("18091002", "Nước mắn Nam Ngư", 20, 29000, "Thơm ngon"));
+//        productManager.createProduct(new Product("18091003", "Coca cola 500ml", 50, 8000, "Nước ngọt coca cola 500ml"));
+//        productManager.createProduct(new Product("18091004", "Mì Ly Omachi Xúc Xích", 50, 17000, "Mì Omachi có xúc xích 200g "));
+//        productManager.createProduct(new Product("18091005", "Trứng gà", 30, 5000, "Trứng gà công nghiệp"));
+//        productManager.createProduct(new Product("18091006", "Sữa đặc Phương Nam", 10, 30000, "Mì hảo hảo tôm chua cay"));
+//        productManager.createProduct(new Product("18091007", "Bánh bông lan cuộn", 4, 23000, "Bánh bông lan cuộn 200g"));
+//        productManager.createProduct(new Product("18091008", "Kim chi gói 200g", 10, 30000, "Kim chi đóng gói 200g"));
+//        productManager.createProduct(new Product("18091009", "Bánh bao trứng cút", 5, 15000, "Bánh bao thịt nhân trứng cút"));
     }
 
     // ^^^

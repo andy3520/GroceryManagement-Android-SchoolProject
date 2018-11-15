@@ -11,22 +11,28 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import panse.team.grocerymanagement.customadapteractivity.DetailOrderListAdapter;
+import panse.team.grocerymanagement.dao.OrderDetailManager;
+import panse.team.grocerymanagement.dao.ProductManager;
 import panse.team.grocerymanagement.entities.Order;
+import panse.team.grocerymanagement.entities.OrderDetails;
 import panse.team.grocerymanagement.entities.Product;
 
 
-public class DetailOrdersContextMenuActivity extends AppCompatActivity implements FrameActi {
+public class DetailOrdersActivity extends AppCompatActivity implements FrameActi {
 
     private TextView tvOrderId, tvCusName, tvOrderDate, tvTotalPrice;
     private ImageButton imgBtnBack;
     private ArrayList<Product> products;
+    private ArrayList<OrderDetails> orderDetails;
     private ListView lvOrderDetails;
     private DetailOrderListAdapter adapter;
+    private ProductManager productManager;
+    private OrderDetailManager orderDetailManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_orders_context_menu);
+        setContentView(R.layout.activity_detail_orders);
         init();
         registerEvent();
         processData();
@@ -41,6 +47,8 @@ public class DetailOrdersContextMenuActivity extends AppCompatActivity implement
         tvTotalPrice = findViewById(R.id.tvTotalOrderPrice);
         imgBtnBack = findViewById(R.id.imgBtnBack);
         lvOrderDetails = findViewById(R.id.lvListOrderDetail);
+        productManager = new ProductManager(this);
+        orderDetailManager = new OrderDetailManager(this);
     }
 
     @Override
@@ -61,16 +69,24 @@ public class DetailOrdersContextMenuActivity extends AppCompatActivity implement
         tvOrderId.setText(order.getOrderId());
         tvCusName.setText(order.getCustomerName());
         tvOrderDate.setText(order.getOrderDate());
-        tvTotalPrice.setText((int) order.getTotalOrderPrice() + "");
+        tvTotalPrice.setText(String.valueOf((int) order.getTotalOrderPrice()));
+        products = new ArrayList<>();
+        orderDetails = new ArrayList<>();
+        orderDetails = orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId());
+        for (OrderDetails odt : orderDetails) {
+            Product product = productManager.getProductByID(odt.getProductId());
+            product.setProductQty(odt.getOrderDetailQty());
+            products.add(product);
+        }
     }
 
     // Dữ liệu giả
     public void applydDataListView() {
-        products = new ArrayList<>();
-        products.add(new Product("83156986", "Redbull", 5, 15000, "Nước tăng lực"));
-        products.add(new Product("83156989", "Trứng gà", 1, 5000, "Trứng gà công nghiệp"));
-        products.add(new Product("8315698745", "Mì tôm", 3, 7000, "Mì tôm chua cay"));
-        products.add(new Product("8315698787", "Khăn", 1, 20000, "Khăn mặt"));
+//        products.add(new Product("83156986", "Redbull", 5, 15000, "Nước tăng lực"));
+//        products.add(new Product("83156989", "Trứng gà", 1, 5000, "Trứng gà công nghiệp"));
+//        products.add(new Product("8315698745", "Mì tôm", 3, 7000, "Mì tôm chua cay"));
+//        products.add(new Product("8315698787", "Khăn", 1, 20000, "Khăn mặt"));
+
         adapter = new DetailOrderListAdapter(this, R.layout.custom_detail_order_item_orderdetail, products);
         lvOrderDetails.setAdapter(adapter);
     }

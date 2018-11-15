@@ -57,12 +57,10 @@
 
                 <TextView
                     android:id="@+id/tvProductIdHeader"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:maxWidth="150dp"
-                    android:minWidth="100dp"
                     android:text="@string/header_proId"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
@@ -72,12 +70,10 @@
 
                 <TextView
                     android:id="@+id/tvProductNameHeader"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:maxWidth="300dp"
-                    android:minWidth="200dp"
                     android:text="@string/header_proName"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
@@ -85,10 +81,8 @@
 
                 <TextView
                     android:id="@+id/tvProductQtyHeader"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:minWidth="100dp"
-                    android:maxWidth="200dp"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
                     android:text="@string/header_qty"
@@ -98,12 +92,10 @@
 
                 <TextView
                     android:id="@+id/tvProductPriceHeader"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:gravity="center"
-                    android:minWidth="100dp"
-                    android:maxWidth="200dp"
                     android:text="@string/header_singlePrice"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"
@@ -111,13 +103,11 @@
 
                 <TextView
                     android:id="@+id/tvProductInfoHeader"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="25dp"
                     android:gravity="center"
-                    android:minWidth="200dp"
-                    android:maxWidth="300dp"
                     android:text="@string/header_info"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceMedium"

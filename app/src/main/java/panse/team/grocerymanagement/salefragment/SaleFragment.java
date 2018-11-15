@@ -137,6 +137,7 @@ public class SaleFragment extends ListFragment implements FrameFuction, BarcodeR
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                hideKeyboard(getActivity());
                 Product product = productManager.getProductByID(barcode.displayValue);
                 double totalPrice = Double.parseDouble(tvTotalPrice.getText().toString());
                 if (product == null) {

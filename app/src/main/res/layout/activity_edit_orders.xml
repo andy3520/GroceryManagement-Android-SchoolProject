@@ -150,19 +150,18 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:gravity="center"
-                        android:text="Tên SP"
+                        android:text="@string/header_proId"
                         android:textAlignment="center"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/textWhite" />
 
                     <TextView
                         android:id="@+id/tvProductQtyHeader"
-                        android:layout_width="wrap_content"
+                        android:layout_width="205dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:gravity="center"
-                        android:minWidth="175dp"
-                        android:text="Số lượng"
+                        android:text="@string/header_qty"
                         android:textAlignment="center"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/textWhite" />
@@ -173,7 +172,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:gravity="center"
-                        android:text="Đơn Giá"
+                        android:text="@string/header_singlePrice"
                         android:textAlignment="center"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/textWhite" />
@@ -184,8 +183,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:gravity="center"
-                        android:minWidth="125dp"
-                        android:text="Thành Tiền"
+                        android:minWidth="211dp"
+                        android:text="@string/header_totalQtyPrice"
                         android:textAlignment="center"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/textWhite" />
