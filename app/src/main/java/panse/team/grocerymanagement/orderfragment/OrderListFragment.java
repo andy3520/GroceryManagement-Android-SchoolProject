@@ -49,6 +49,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
     private static final int EDIT = 2;
     private OrderManager orderManager;
     private OrderDetailManager orderDetailManager;
+    private ProductManager productManager;
 
     // Khởi tạo các đối tượng theo id
     @Override
@@ -85,6 +86,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         // Sqlite manager
         orderManager = new OrderManager(getActivity());
         orderDetailManager = new OrderDetailManager(getActivity());
+        productManager = new ProductManager(getActivity());
 
         // Lấy danh sách order từ CSDL
         orders = orderManager.getAllOrder();
@@ -158,6 +160,11 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Order order = orders.get(menuInfo.position);
+                        for (OrderDetails od : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                            Product product = productManager.getProductByID(od.getProductId());
+                            product.setProductQty(product.getProductQty()+od.getOrderDetailQty());
+                            productManager.updateProduct(product.getProductId(), product);
+                        }
                         if (orderManager.deleteOrderById(order.getOrderId()) > 0) {
 //                                if (orderDetailManager.deletManyOrderDetailByOrdId(order.getOrderId()) > 0) {
                             Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
