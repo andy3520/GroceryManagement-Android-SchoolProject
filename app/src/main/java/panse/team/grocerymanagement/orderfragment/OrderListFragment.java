@@ -144,6 +144,64 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         getActivity().startActivity(intent);
     }
 
+    public void deleteOrder(final int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Xóa hóa đơn");
+        builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn chắn chắn muốn xóa hóa đơn?");
+        builder.setNegativeButton("Hủy", null);
+        builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Order order = orders.get(pos);
+                for (OrderDetails od : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                    Product product = productManager.getProductByID(od.getProductId());
+                    product.setProductQty(product.getProductQty() + od.getOrderDetailQty());
+                    productManager.updateProduct(product.getProductId(), product);
+                }
+                if (orderManager.deleteOrderById(order.getOrderId()) > 0) {
+//                                if (orderDetailManager.deletManyOrderDetailByOrdId(order.getOrderId()) > 0) {
+                    Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    orders.remove(pos);
+                    adapter.notifyDataSetChanged();
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+//                                }
+                } else {
+                    Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.show();
+    }
+    public void deleteOrderEmpty(final int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Xóa hóa đơn");
+        builder.setMessage("Hóa đơn bị xóa do không chưa bất kì sản phẩm nào");
+        builder.setNeutralButton("Ok", new AlertDialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Order order = orders.get(pos);
+                for (OrderDetails od : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                    Product product = productManager.getProductByID(od.getProductId());
+                    product.setProductQty(product.getProductQty() + od.getOrderDetailQty());
+                    productManager.updateProduct(product.getProductId(), product);
+                }
+                if (orderManager.deleteOrderById(order.getOrderId()) > 0) {
+//                                if (orderDetailManager.deletManyOrderDetailByOrdId(order.getOrderId()) > 0) {
+                    Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    orders.remove(pos);
+                    adapter.notifyDataSetChanged();
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+//                                }
+                } else {
+                    Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.show();
+    }
+
     // Sự kiện cho các item trong context menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -152,33 +210,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
 
             // Xóa sẽ hiện dialog xác nhận
             case R.id.delete:
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Xóa hóa đơn");
-                builder.setMessage("Thao tác xóa sẽ không thể hoàn tác\nBạn chắn chắn muốn xóa hóa đơn?");
-                builder.setNegativeButton("Hủy", null);
-                builder.setPositiveButton("Xóa", new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Order order = orders.get(menuInfo.position);
-                        for (OrderDetails od : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
-                            Product product = productManager.getProductByID(od.getProductId());
-                            product.setProductQty(product.getProductQty()+od.getOrderDetailQty());
-                            productManager.updateProduct(product.getProductId(), product);
-                        }
-                        if (orderManager.deleteOrderById(order.getOrderId()) > 0) {
-//                                if (orderDetailManager.deletManyOrderDetailByOrdId(order.getOrderId()) > 0) {
-                            Toast.makeText(getActivity(), "Xóa thành công", Toast.LENGTH_SHORT).show();
-                            orders.remove(menuInfo.position);
-                            adapter.notifyDataSetChanged();
-//                                } else {
-//                                    Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
-//                                }
-                        } else {
-                            Toast.makeText(getActivity(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                builder.show();
+                deleteOrder(menuInfo.position);
                 return true;
 
             // Gọi acti chi tiết
@@ -196,7 +228,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 Intent intent1 = new Intent(getActivity(), EditOrdersActivity.class);
                 Bundle bundle1 = new Bundle();
                 Order order1 = orders.get(menuInfo.position);
-                bundle1.putSerializable("pos",menuInfo.position);
+                bundle1.putSerializable("pos", menuInfo.position);
                 bundle1.putSerializable("order", order1);
                 intent1.putExtra("edit", bundle1);
                 startActivityForResult(intent1, EDIT);
@@ -227,27 +259,38 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                 orderNeedEdit.setTotalOrderPrice(order.getTotalOrderPrice());
                 ArrayList<Product> editList = EditOrdersActivity.editDetail;
                 ArrayList<Product> deleteList = EditOrdersActivity.deleteDetail;
-                if (deleteList.size() > 0) {
-                    for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
-                        for (Product p : deleteList) {
-                            if (odt.getProductId().equals(p.getProductId())) {
-                                orderDetailManager.deletOneOrderDetail(odt.getOrderDetailId());
-                            }
-                        }
-                    }
-                    deleteList.clear();
-                }
-                if (editList.size() > 0) {
-                    for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
-                        for (Product p : editList) {
-                            if (odt.getProductId().equals(p.getProductId())) {
-                                odt.setOrderDetailQty(p.getProductQty());
-                                if (orderDetailManager.updateOrderDetail(odt.getOrderDetailId(), odt)>0) {
+                if (deleteList.size() == orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId()).size()) {
+                    deleteOrderEmpty(pos);
+                } else {
+                    if (deleteList.size() > 0) {
+                        for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                            for (Product p : deleteList) {
+                                if (odt.getProductId().equals(p.getProductId())) {
+                                    Product product = productManager.getProductByID(odt.getProductId());
+                                    product.setProductQty(product.getProductQty() + odt.getOrderDetailQty());
+                                    productManager.updateProduct(product.getProductId(), product);
+                                    orderDetailManager.deletOneOrderDetail(odt.getOrderDetailId());
                                 }
                             }
                         }
+                        deleteList.clear();
                     }
-                    editList.clear();
+                    if (editList.size() > 0) {
+                        for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                            for (Product p : editList) {
+                                if (odt.getProductId().equals(p.getProductId())) {
+                                    int qtyOld = odt.getOrderDetailQty();
+                                    int qtyNew = p.getProductQty();
+                                    Product product = productManager.getProductByID(odt.getProductId());
+                                    product.setProductQty(product.getProductQty() + qtyOld - qtyNew);
+                                    productManager.updateProduct(product.getProductId(), product);
+                                    odt.setOrderDetailQty(qtyNew);
+                                    orderDetailManager.updateOrderDetail(odt.getOrderDetailId(), odt);
+                                }
+                            }
+                        }
+                        editList.clear();
+                    }
                 }
                 Toast.makeText(getActivity(), "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
                 orderManager.updateOrder(order.getOrderId(), order);
