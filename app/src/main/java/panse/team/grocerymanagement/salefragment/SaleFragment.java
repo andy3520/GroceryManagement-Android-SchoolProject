@@ -78,6 +78,11 @@ public class SaleFragment extends ListFragment implements FrameFuction, BarcodeR
                         } else {
                             Order order = new Order("", edtCusName.getText().toString(), null, Double.parseDouble(tvTotalPrice.getText().toString()));
                             if (orderManager.createOrder(order, products)>0) {
+                                for (Product p : products) {
+                                    Product product = productManager.getProductByID(p.getProductId());
+                                    product.setProductQty(product.getProductQty()-p.getProductQty());
+                                    productManager.updateProduct(p.getProductId(), product);
+                                }
                                 Toast.makeText(getActivity(), "Tạo hóa đơn thành công", Toast.LENGTH_SHORT).show();
                                 callOrderListFragment();
                                 BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
