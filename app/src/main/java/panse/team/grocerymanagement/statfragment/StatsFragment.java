@@ -94,6 +94,10 @@ public class StatsFragment extends ListFragment implements FrameFuction {
             public void onClick(View v) {
                 int total = (int)orderManager.totalSaleByTime(edtStartDate.getText().toString(), edtEndDate.getText().toString());
                 tvRevenue.setText(String.valueOf(total));
+                ArrayList<Product> newProducts = productManager.sortProductBySale(edtStartDate.getText().toString(), edtEndDate.getText().toString());
+                adapter = new StatsProductAdapter(getActivity(), R.layout.custom_stats_product_list, newProducts);
+                setListAdapter(adapter);
+
             }
         });
     }
