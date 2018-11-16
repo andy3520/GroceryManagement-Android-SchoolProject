@@ -85,9 +85,8 @@ public class EditOrdersActivity extends AppCompatActivity implements FrameActi {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "dd/MM/yyyy"; //In which you need put here
+                String myFormat = "dd/MM/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
                 edtOrderDate.setText(sdf.format(myCalendar.getTime()));
             }
         };

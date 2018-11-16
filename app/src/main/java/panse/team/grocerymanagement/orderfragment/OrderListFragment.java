@@ -59,6 +59,8 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderCusNameHeader = view.findViewById(R.id.tvCustomerNameHeader);
         tvOrderDateHeader = view.findViewById(R.id.tvOrderDateHeader);
         tvOrderPriceHeader = view.findViewById(R.id.tvTotalOrderPriceHeader);
+        svOrderList = view.findViewById(R.id.svOrderList);
+        svOrderList.setQueryHint("Nhập tên Khách hàng");
         imgBtnAdd = view.findViewById(R.id.imgBtnAdd);
     }
 
@@ -70,6 +72,23 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
         tvOrderPriceHeader.setOnClickListener(this);
         tvOrderCusNameHeader.setOnClickListener(this);
         imgBtnAdd.setOnClickListener(this);
+        svOrderList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ArrayList<Order> queryOrder = orderManager.getAllOrderByCustomerName(query);
+                OrderListAdapter newAdapter = new OrderListAdapter(getActivity(), R.layout.custom_order_listview, queryOrder);
+                setListAdapter(newAdapter);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<Order> queryOrder = orderManager.getAllOrderByCustomerName(newText);
+                OrderListAdapter newAdapter = new OrderListAdapter(getActivity(), R.layout.custom_order_listview, queryOrder);
+                setListAdapter(newAdapter);
+                return false;
+            }
+        });
     }
 
     @Override

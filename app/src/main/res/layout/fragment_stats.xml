@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".statfragment.StatsFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtStartDate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:editable="false"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="date"
+                android:textAlignment="center"
+                android:textColor="@color/textWhite"
+                android:theme="@style/Custom"
+                tools:ignore="Deprecated,KeyboardInaccessibleWidget" />
+
+            <EditText
+                android:id="@+id/edtEndDate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:editable="false"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="date"
+                android:textAlignment="center"
+                android:textColor="@color/textWhite"
+                android:theme="@style/Custom"
+                tools:ignore="Deprecated,KeyboardInaccessibleWidget" />
+
+            <ImageButton
+                android:id="@+id/imgBtnFind"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/sharp_find_in_page_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doanh thu"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/tvRevenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doanh thu"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="Sản phẩm bán chạy"
+            android:textAlignment="center"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/textWhite" />
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@color/colorPrimary"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvProductIdHeader"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
+                        android:text="@string/header_proId"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/textWhite" />
+
+                    <TextView
+                        android:id="@+id/tvProductNameHeader"
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
+                        android:text="@string/header_proName"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/textWhite" />
+
+                    <TextView
+                        android:id="@+id/tvProductQtyHeader"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
+                        android:text="Số lượng đã bán"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/textWhite" />
+
+                    <TextView
+                        android:id="@+id/tvProductPriceHeader"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
+                        android:text="@string/header_totalPrice"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/textWhite" />
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@android:id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                </ListView>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</LinearLayout>

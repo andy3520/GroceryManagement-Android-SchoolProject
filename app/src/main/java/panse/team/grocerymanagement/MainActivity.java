@@ -16,6 +16,7 @@ import panse.team.grocerymanagement.entities.Product;
 import panse.team.grocerymanagement.orderfragment.OrderListFragment;
 import panse.team.grocerymanagement.productfragment.ProductListFragment;
 import panse.team.grocerymanagement.salefragment.SaleFragment;
+import panse.team.grocerymanagement.statfragment.StatsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,14 +42,20 @@ public class MainActivity extends AppCompatActivity {
                     addProductList();
                     return true;
                 case R.id.nav_phantich:
-
+                    addStats();
                     return true;
             }
             return false;
         }
     };
 
-    // ^^^
+    private void addStats() {
+        fragmentManager = getSupportFragmentManager();
+        StatsFragment statsFragment = new StatsFragment();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentMainContainer, statsFragment);
+        fragmentTransaction.commit();
+    }
 
     // Khởi tạo các view
     private void init() {

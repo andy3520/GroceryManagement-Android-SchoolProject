@@ -71,7 +71,8 @@ public class SaleFragment extends ListFragment implements FrameFuction, BarcodeR
                     public void run() {
                         if (edtCusName.getText().toString().equals("")) {
                             Toast.makeText(getActivity(), "Vui lòng nhập tên khách hàng", Toast.LENGTH_SHORT).show();
-                            hideKeyboard(getActivity());
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(edtCusName, InputMethodManager.SHOW_FORCED);
                         } else if (products.size() <= 0) {
                             Toast.makeText(getActivity(), "Vui lòng thêm ít nhất một sản phẩm", Toast.LENGTH_SHORT).show();
                             hideKeyboard(getActivity());

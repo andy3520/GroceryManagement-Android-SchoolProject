@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import panse.team.grocerymanagement.entities.Product;
 
 public class ProductListFragment extends ListFragment implements View.OnClickListener, FrameFuction {
     private ArrayList<Product> products;
+    private SearchView svProduct;
     private ListView list;
     private ImageButton imgBtnAdd;
     private ProductListAdapter adapter;
@@ -55,6 +57,7 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         tvProductQtyHeader = view.findViewById(R.id.tvProductQtyHeader);
         tvProductPriceHeader = view.findViewById(R.id.tvProductPriceHeader);
         tvProductInfoHeader = view.findViewById(R.id.tvProductInfoHeader);
+        svProduct = view.findViewById(R.id.svProductList);
         imgBtnAdd = view.findViewById(R.id.imgBtnAdd);
     }
 
@@ -66,6 +69,24 @@ public class ProductListFragment extends ListFragment implements View.OnClickLis
         tvProductPriceHeader.setOnClickListener(this);
         tvProductInfoHeader.setOnClickListener(this);
         imgBtnAdd.setOnClickListener(this);
+        svProduct.setQueryHint("Nhập tên sản phẩm");
+        svProduct.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ArrayList<Product> queryOrder = productManager.getProductByName(query);
+                ProductListAdapter newAdapter = new ProductListAdapter(getActivity(), R.layout.custom_product_listview, queryOrder);
+                setListAdapter(newAdapter);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<Product> queryOrder = productManager.getProductByName(newText);
+                ProductListAdapter newAdapter = new ProductListAdapter(getActivity(), R.layout.custom_product_listview, queryOrder);
+                setListAdapter(newAdapter);
+                return false;
+            }
+        });
     }
 
     @Override

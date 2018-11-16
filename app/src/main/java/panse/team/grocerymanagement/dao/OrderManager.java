@@ -74,11 +74,11 @@ public class OrderManager {
         return listOrder;
     }
 
-    public ArrayList<Order> getAllOrderByCustomerName(String cusName){
+    public ArrayList<Order> getAllOrderByCustomerName(String cusName) {
         ArrayList<Order> listOrder = new ArrayList<>();
         db = helper.getReadableDatabase();
-        String query = "select * from " +TABLE_Order+" where " + USERNAME+" like '%"+cusName+"%'";
-        Cursor cursor = db.rawQuery(query,null);
+        String query = "select * from " + TABLE_Order + " where " + USERNAME + " like '%" + cusName + "%'";
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
                 Order o = new Order();
@@ -102,7 +102,7 @@ public class OrderManager {
                 new String[]{String.valueOf(ordID)}, null, null, null, null);
 //        Cursor cursor;
 //        cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null);
-        if (cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
         }
         Order o = new Order(cursor.getString(0), cursor.getString(1), cursor.getString(3), cursor.getDouble(2));
@@ -111,14 +111,14 @@ public class OrderManager {
         return o;
     }
 
-    public long updateOrder(String ordId,  Order newOrd){
+    public long updateOrder(String ordId, Order newOrd) {
         long n;
         db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(USERNAME,newOrd.getCustomerName());
+        contentValues.put(USERNAME, newOrd.getCustomerName());
         contentValues.put(TOTALPRICE, newOrd.getTotalOrderPrice());
         contentValues.put(DATEORD, newOrd.getOrderDate());
-        n = db.update(TABLE_Order,contentValues,ORDID+"=?",new String[]{String.valueOf(ordId)});
+        n = db.update(TABLE_Order, contentValues, ORDID + "=?", new String[]{String.valueOf(ordId)});
         return n;
     }
 
@@ -131,10 +131,13 @@ public class OrderManager {
     }
 
     public double totalSaleByTime(String startDate, String endDate) {
-        double sale=0;
+        double sale = 0;
         db = helper.getReadableDatabase();
         Cursor cursor;
-        cursor = db.rawQuery("SELECT SUM(totalPrice) FROM " + TABLE_Order + " WHERE dateOrd between '"+startDate+"' and '"+endDate+"' ", null);
+        cursor = db.rawQuery("SELECT SUM(totalPrice) FROM " + TABLE_Order +
+                " WHERE julianday(substr(dateOrd,7)||'-'||substr(dateOrd,4,2)||'-'||substr(dateOrd,1,2))  " +
+                "between julianday(substr('" + startDate + "',7)||'-'||substr('" + startDate + "',4,2)||'-'||substr('" + startDate + "',1,2)) " +
+                "and julianday(substr('" + endDate + "',7)||'-'||substr('" + endDate + "',4,2)||'-'||substr('" + endDate + "',1,2)) ", null);
         if (cursor.moveToFirst()) {
             sale = cursor.getDouble(0);
         }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/tvProductId"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="@string/header_proId"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="@string/header_proName"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvProductQty"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="@string/header_qty"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvProductPrice"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="@string/header_singlePrice"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+</LinearLayout>

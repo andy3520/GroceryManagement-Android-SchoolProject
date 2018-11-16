@@ -80,17 +80,25 @@ public class ProductManager {
         return prod;
     }
 
-    public Product getProductByName(String proN) {
-
-        String selectQuery = "SELECT * FROM " + TABLE_Product + " WHERE proName = '" + proN + "'";
+    public ArrayList<Product> getProductByName(String proN) {
+        ArrayList<Product> products = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_Product + " WHERE proName like '%" + proN + "%'";
         db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        Product prod = new Product(cursor.getString(0), cursor.getString(1), cursor.getInt(3), cursor.getDouble(2), cursor.getString(4));
+        if (cursor.moveToFirst()) {
+            do {
+                Product p = new Product();
+                p.setProductId(cursor.getString(0));
+                p.setProductName(cursor.getString(1));
+                p.setProductPrice(cursor.getDouble(2));
+                p.setProductQty(cursor.getInt(3));
+                p.setInformation(cursor.getString(3));
+                products.add(p);
 
-        cursor.close();
-        return prod;
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return products;
 
     }
 
@@ -138,10 +146,16 @@ public class ProductManager {
     }
 
     // trả về List Product chỉ có 4 gtrị = "ID","NAME","QtySale","TotalSale"
-    public ArrayList<Product> sortProductBySale() {
+    public ArrayList<Product> sortProductBySale(String startDate, String endDate) {
         ArrayList<Product> lstPro = new ArrayList<>();
         // SELECT c.c3, p.c2, SUM(c.c4), SUM(c.c5) FROM 'pro' p join 'ct' c on p.c1 = c.c3 group by c.c3, p.c2 order by c.c5;
-        String selectQuery = "SELECT dt.proID, p.proName,SUM(dt.qTy), SUM(dt.totalProduct) FROM dbOrderDetail dt join dbProduct p on dt.proID = p.proID group by dt.proID, p.proName order by dt.totalProduct";
+        String selectQuery = "SELECT dt.proID, p.proName,SUM(dt.qTy), SUM(dt.totalProduct) " +
+                "FROM dbOrderDetail dt join dbProduct p on dt.proID = p.proID " +
+                "WHERE julianday(substr(dt.dateOrd,7)||'-'||substr(dt.dateOrd,4,2)||'-'||substr(dt.dateOrd,1,2)) "+
+                "BETWEEN julianday(substr('"+startDate+"',7)||'-'||substr('"+startDate+"',4,2)||'-'||substr('"+startDate+"',1,2)) "+
+                "AND julianday(substr('"+endDate+"',7)||'-'||substr('"+endDate+"',4,2)||'-'||substr('"+endDate+"',1,2))"+
+                "group by dt.proID, p.proName " +
+                "order by sum(dt.qTy) desc";
 
         db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
