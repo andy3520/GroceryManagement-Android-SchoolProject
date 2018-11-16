@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GroceryManagement</string>
+    <string name="app_name">Grocery Management</string>
 
     <string name="nav_order">Đơn hàng</string>
     <string name="nav_sale">Bán hàng</string>
