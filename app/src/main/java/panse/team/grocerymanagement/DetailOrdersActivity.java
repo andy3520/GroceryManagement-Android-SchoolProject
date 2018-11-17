@@ -76,6 +76,7 @@ public class DetailOrdersActivity extends AppCompatActivity implements FrameActi
         for (OrderDetails odt : orderDetails) {
             Product product = productManager.getProductByID(odt.getProductId());
             product.setProductQty(odt.getOrderDetailQty());
+            product.setProductPrice(odt.getOrderDetailPrice()/product.getProductQty());
             products.add(product);
         }
     }

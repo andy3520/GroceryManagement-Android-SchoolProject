@@ -53,10 +53,10 @@ public class EditOrderAdapter extends ArrayAdapter<Product> {
         }
         final Product product = products.get(position);
         viewHolder.tvProName.setText(product.getProductName());
-        viewHolder.tvProQty.setText(product.getProductQty() + "");
-        viewHolder.tvProPrice.setText((int) product.getProductPrice() + "");
+        viewHolder.tvProQty.setText(String.valueOf(product.getProductQty()));
+        viewHolder.tvProPrice.setText(String.valueOf((int) product.getProductPrice()));
         double total = product.getProductQty() * product.getProductPrice();
-        viewHolder.tvTotalPrice.setText((int) total + "");
+        viewHolder.tvTotalPrice.setText(String.valueOf((int)total));
         viewHolder.imgBtnIns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
