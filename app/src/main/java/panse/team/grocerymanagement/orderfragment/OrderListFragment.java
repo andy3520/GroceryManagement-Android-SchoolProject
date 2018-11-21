@@ -304,6 +304,7 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                                     product.setProductQty(product.getProductQty() + qtyOld - qtyNew);
                                     productManager.updateProduct(product.getProductId(), product);
                                     odt.setOrderDetailQty(qtyNew);
+                                    odt.setOrderDetailPrice(p.getProductPrice() * qtyNew);
                                     orderDetailManager.updateOrderDetail(odt.getOrderDetailId(), odt);
                                 }
                             }
@@ -311,8 +312,12 @@ public class OrderListFragment extends ListFragment implements View.OnClickListe
                         editList.clear();
                     }
                 }
-                Toast.makeText(getActivity(), "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
                 orderManager.updateOrder(order.getOrderId(), order);
+                for (OrderDetails odt : orderDetailManager.getAllOrderDetailByOrdID(order.getOrderId())) {
+                    odt.setOrderDetailDate(order.getOrderDate());
+                    orderDetailManager.updateOrderDetail(odt.getOrderDetailId(), odt);
+                }
+                Toast.makeText(getActivity(), "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
             }
         } else {

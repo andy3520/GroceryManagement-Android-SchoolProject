@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,6 +81,12 @@ public class EditOrdersActivity extends AppCompatActivity implements FrameActi {
         edtOrderDate.setText(order.getOrderDate());
 
         final Calendar myCalendar = Calendar.getInstance();
+        DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            myCalendar.setTime(sourceFormat.parse(order.getOrderDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -143,7 +151,7 @@ public class EditOrdersActivity extends AppCompatActivity implements FrameActi {
         for (OrderDetails odt : orderDetails) {
             Product product = productManager.getProductByID(odt.getProductId());
             product.setProductQty(odt.getOrderDetailQty());
-            product.setProductPrice(odt.getOrderDetailPrice()/product.getProductQty());
+            product.setProductPrice(odt.getOrderDetailPrice()/odt.getOrderDetailQty());
             products.add(product);
         }
     }

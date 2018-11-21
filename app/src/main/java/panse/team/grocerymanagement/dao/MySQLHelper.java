@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class MySQLHelper extends SQLiteOpenHelper {
     private final String TAG = "SQLiteHelper";
-    private static final String DATABASE_NAME = "Nhom1Android2";
+    private static final String DATABASE_NAME = "GroceryManager";
     private static int VERSION = 1;
     private Context context;
 

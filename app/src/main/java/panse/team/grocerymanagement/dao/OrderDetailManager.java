@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -110,7 +111,7 @@ public class OrderDetailManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QTY, newOrdDt.getOrderDetailQty());
         contentValues.put(TOTALPRODUCT, newOrdDt.getOrderDetailPrice());
-        contentValues.put(DATEORD, newOrdDt.getOrderDetailDateString());
+        contentValues.put(DATEORD, newOrdDt.getOrderDetailDate());
         return db.update(TABLE_OrderDetail, contentValues, ORDDETAILID + "=?", new String[]{ordDtId});
     }
 
